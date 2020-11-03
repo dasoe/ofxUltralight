@@ -21,6 +21,10 @@ With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/) a 
 
 (I use Visual Studio 2019 Platform Toolset v42. I have to retarget Solution when opening.)
 
+<<<<<<< HEAD
 I am very happy! It works. Don't expect too much already, but come back from time to time, as it will grow.
+=======
+I am very happy! It works. Don't expect too much already, but come back from tiime to time, as it will grow.
+>>>>>>> main
 
 oe
