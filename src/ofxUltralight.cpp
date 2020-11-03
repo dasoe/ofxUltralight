@@ -24,7 +24,36 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 
 	renderer = Renderer::Create();
 	view = renderer->CreateView(width, height, false, nullptr);
-	view->LoadURL(url.c_str());
+	ofLogVerbose("given string is '" + url + "'");
+	string search = "http" +':' + '//';
+	string search2 = "https" + ':' + '//';
+	bool isURL = false;
+	// there seem to be problem with colons, so some workaround. Feel free to fix it...
+	if ( url.rfind("http", 0) == 0 && url.rfind("//", 6) ) {
+		ofLogVerbose("starts with http:// ... set it as a URI");
+		isURL = true;
+	}
+	if ( url.rfind("https", 0) == 0 && url.rfind("//", 7) ) {
+		ofLogVerbose("starts with https:// ... set it as a URI");
+		isURL = true;
+	}
+
+	if (isURL) {
+		view->LoadURL(url.c_str());
+	} else {
+		ofLogVerbose("think it's a File - try to load it");
+		ofBuffer buffer = ofBufferFromFile(url);
+		string content;
+		if (buffer.size()) {
+			for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
+
+				content += *it;
+
+			}
+		}
+		view->LoadHTML(content.c_str());
+	}
+
 	view->Focus();
 }
 
@@ -85,16 +114,70 @@ void ofxUltralight::draw() {
 
 //--------------------------------------------------------------
 void ofxUltralight::keyPressed(int key) {
+	int text = key;
+	// get the correct virtual key codes
+	int vk = key;
+
+	switch (key) {
+		case OF_KEY_LEFT:
+			vk = KeyCodes::GK_LEFT;
+			break;
+		case OF_KEY_RIGHT:
+			vk = KeyCodes::GK_RIGHT;
+			break;
+		case OF_KEY_UP:
+			vk = KeyCodes::GK_UP;
+			break;
+		case OF_KEY_DOWN:
+			vk = KeyCodes::GK_DOWN;
+			break;
+		case OF_KEY_DEL:
+			vk = KeyCodes::GK_DELETE;
+			break;
+		case OF_KEY_BACKSPACE:
+			vk = KeyCodes::GK_BACK;
+			break;
+			// this is the 'dot' key. For some reason I had to hard-code this in order to make it work
+		case 46:
+			vk = KeyCodes::GK_DECIMAL;
+			break;
+		case -1:
+			return;
+		case OF_KEY_RETURN:
+			vk = KeyCodes::GK_RETURN;
+			return;
+		case OF_KEY_SHIFT:
+			vk = KeyCodes::GK_SHIFT;
+			return;
+		case OF_KEY_TAB:
+			// don't insert anything
+			return;
+		default:
+			break;
+	}
+
 	KeyEvent evt;
 	evt.type = KeyEvent::kType_RawKeyDown;
 	// You'll need to generate a key identifier from the virtual key code
 	// when synthesizing events. This function is provided in KeyEvent.h
+	evt.virtual_key_code = vk;
+	evt.virtual_key_code = vk;
+	evt.native_key_code = key;
+	evt.text = ofToString((char)text).c_str();
+	evt.unmodified_text = ofToString((char)text).c_str();
+	//evt.modifiers = (char)OF_KEY_MODIFIER;
 	GetKeyIdentifierFromVirtualKeyCode(evt.virtual_key_code, evt.key_identifier);
 	view->FireKeyEvent(evt);
+
 	KeyEvent evt2;
 	evt2.type = KeyEvent::kType_Char;
-	evt2.text = ofToString(key).c_str();
-	evt2.unmodified_text = ofToString(key).c_str(); // If not available, set to same as evt.text
+	evt2.virtual_key_code = vk;
+	evt2.virtual_key_code = vk;
+	evt2.native_key_code = key;
+	evt2.text = ofToString((char)text).c_str();
+	evt2.unmodified_text = ofToString((char)text).c_str();
+	//evt2.modifiers = (char)OF_KEY_MODIFIER;
+	evt2.unmodified_text = ofToString((char)key).c_str(); // If not available, set to same as evt.text
 
 	view->FireKeyEvent(evt2);
 }

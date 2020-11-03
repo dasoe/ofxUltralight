@@ -33,6 +33,7 @@ common:
 	# but if the addon or addon libraries need special search paths they can be
 	# specified here separated by spaces or one per line using +=
 	ADDON_INCLUDES =
+	ADDON_INCLUDES += src
 	ADDON_INCLUDES += libs
 	ADDON_INCLUDES += libs/include
 	
