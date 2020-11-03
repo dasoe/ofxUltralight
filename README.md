@@ -12,21 +12,8 @@ With the release of Ultralight 1.2 a few days ago, implementation of Ultralight 
 
 ##Installation
 
-* Use project generator to build a project and include ofxUltralight
-* Remove the *Additional include directories* (*C/C++* Section in Properties of your project) or you will have compiler errors. You will only need the following Ones:
-	- ..\..\..\addons\ofxUltralight\libs
-	- ..\..\..\addons\ofxUltralight\libs\include
-	- ..\..\..\addons\ofxUltralight\src
-	- (and of course %(AdditionalIncludeDirectories))
-* Add the following to *Additional Library Directories* (*Linker > General* Section in Properties of your project):
-	- ..\..\..\addons\ofxUltralight\libs\lib\
-	- (and of course %(AdditionalLibraryDirectories))
-* Add the following *Additional Dependencies* (*Linker > Input* Section in Properties of your project:
-	- UltralightCore.lib
-	- Ultralight.lib
-	- WebCore.lib
-	- AppCore.lib
-	- (and of course %(AdditionalDependencies))
-* Copy the contents of folder ofxUltralight\bin\ to the bin folder of your project
+* Use project generator to build a project and include ofxUltralight. 
+* Set it to x64 and build
+(I use Visual Studio 2019 Platform Toolset v42. I have to retarget Solution when opening.)
 
 See the example for usage.
