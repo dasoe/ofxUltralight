@@ -8,12 +8,12 @@ With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/) so
 * Heavily layouted One-Page content, that can be changed easily without having to adjust my OF App
 * Simple GUI functionality (communication with the OF App, which has the power to do the advanced stuff)
 
-Of course the addon can be adjusted and developed. I am happy if it will be an all-purpose Browser addon one day. Join in, everybody. 
-Also I am not a C++ developer. I am more than happy to learn and improve the code!
+My focus is not on perfect code but on ease of use and integration. Of course the addon can be adjusted and developed. I am happy if it will be an all-purpose Browser addon one day. Join in, everybody. 
+Also: I am not a C++ developer. I am more than happy to learn and improve the code!
 
 ### Status
 
-* For now only CPU rendering, GPU ist yet to come.
+* For now only CPU rendering, GPU ist yet to come. (Please check out [IanByuns work](https://github.com/IanByun/ofxUltralight-byun) for a GPU solution.)
 * Mouse klick implementation, but no scrollwheel so far. 
 * Only beginning of keyboard implementation.
 * Only windows for now. I will definetely do a Linux Version, though.
