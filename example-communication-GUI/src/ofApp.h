@@ -3,9 +3,11 @@
 #include "ofMain.h"
 #include "ofxUltralight.h"
 
+
 class ofApp : public ofBaseApp{
 
 	public:
+
 		void setup();
 		void update();
 		void draw();
@@ -22,5 +24,12 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		bool JSinitialized;
+		void buttonOne(const JSObject& obj, const JSArgs& args);
+		void buttonTwo(const JSObject& obj, const JSArgs& args);
 		ofxUltralight ul;
+
+		ofVec2f positionCircle, positionRectangle;
+		vector <ofColor> colors;
+		unsigned int whichColor;
 };

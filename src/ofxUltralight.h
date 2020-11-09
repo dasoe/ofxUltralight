@@ -4,6 +4,7 @@
 #include <Ultralight/Ultralight.h>
 #include <JavaScriptCore/JavaScript.h>
 #include <AppCore/Platform.h>
+#include <AppCore/JSHelpers.h>
 
 
 
@@ -24,11 +25,17 @@ public:
 };
 
 
-class ofxUltralight {
+
+class ofxUltralight : public LoadListener
+	{
 
 public:
+		virtual void OnDOMReady(ultralight::View* caller, uint64_t frame_id, bool is_main_frame,const String& url);
+		bool DOMready;
+
 		void setup(int width, int height, string url);
 		void setup(int width, int height, ofVec2f t_offset, string url);
+		
 		void update();
 		void draw();
 
@@ -44,11 +51,13 @@ public:
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+		string getStringFromJSstr(JSString str);
 
 		Config config;
 		shared_ptr<GPUDriver> gpu_driver;
 		RefPtr<Renderer> renderer;
 		RefPtr<View> view;
+		JSContextRef jsContext;
 
 		ofVec2f offset;
 		ofTexture oeTexture;

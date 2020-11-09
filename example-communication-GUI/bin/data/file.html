@@ -1,13 +1,41 @@
 <!DOCTYPE html>
-<head>
 
+<head>
+    <script>
+        let turn = false;
+        function callOFButtonOne(num) { }
+        function callOFSecondButton() { }
+        function receiveFromOF(content) {
+            let el = document.getElementById("contentToAdd");
+            el.innerHTML += content;
+            if (turn) {
+                document.body.style.backgroundColor = "#609030";
+            } else {
+                document.body.style.backgroundColor = "#903060";
+            }
+            turn = !turn;
+
+}            
+
+    </script>
 </head>
+
 <body>
     <h2>
-        GUI use
+        Browser
     </h2>
-<div>
-    CONTENT
-</div>
+    <div>
+        An example for GUI use.<br />
+        Click the Buttons to trigger the openFrameworks App:
+    </div>
+    <div>
+        <button onclick="callOFButtonOne('Persistence is king!');">Button 1</button>
+        <button onclick="callOFSecondButton();">Button 2</button>
+    </div>
+    <br />
+    <div id="contentToAdd">
+        The other way works too. Click the Button in the openFrameworks App to add some Color (and Content below).
+        <br /><br />
 
+    </div>
 </body>

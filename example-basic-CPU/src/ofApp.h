@@ -15,8 +15,6 @@ public:
 	void mouseMoved(int x, int y);
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
-	void dragEvent(ofDragInfo dragInfo);
-	void gotMessage(ofMessage msg);
 
 	ofxUltralight ul;
 

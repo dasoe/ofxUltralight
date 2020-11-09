@@ -1,7 +1,9 @@
 ﻿#include "ofxUltralight.h"
 
+
 void ofxUltralight::setup(int width, int height, string url) {
 	setup(width, height, ofVec2f(0, 0), url);
+	DOMready = false;
 }
 
 void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
@@ -17,7 +19,6 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 	platform.set_font_loader(GetPlatformFontLoader());
 	platform.set_config(config);
 	platform.set_logger(new MyLogger());
-	// Define our custom Logger class
 
 	//gpu_driver = make_shared<GPUDriverGL>(1);
 	//platform.set_gpu_driver(gpu_driver.get());
@@ -55,8 +56,20 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 	}
 
 	view->Focus();
+	view->set_load_listener(this);
 }
 
+//--------------------------------------------------------------
+void ofxUltralight::OnDOMReady(ultralight::View* caller, uint64_t frame_id, bool is_main_frame, const String& url) {
+	ofLogVerbose( "######## DOM ready ##########" );
+	DOMready = true;
+
+	Ref<JSContext> locked_context = caller->LockJSContext();
+	SetJSContext(locked_context.get());
+	// do this directyl in you ofApp
+	//JSObject global = JSGlobalObject();
+	//global["callMessage"] = BindJSCallback(&ofxUltralight::Message);
+}
 
 //--------------------------------------------------------------
 void ofxUltralight::update() {
@@ -106,6 +119,15 @@ void ofxUltralight::draw() {
 
 		/// Clear the dirty bounds.
 		bitmap_surface->ClearDirtyBounds();
+
+		// also do get JS stuff, as context may have changed
+
+		  // Acquire the JS execution context for the current page.
+		  //
+		  // This call will lock the execution context for the current
+		  // thread as long as the Ref<> is alive.
+		  //
+		
 	}
 	oeTexture.draw(offset.x, offset.y);
 
@@ -254,4 +276,13 @@ void ofxUltralight::gotMessage(ofMessage msg) {
 //--------------------------------------------------------------
 void ofxUltralight::dragEvent(ofDragInfo dragInfo) {
 
+}
+
+//--------------------------------------------------------------
+string ofxUltralight::getStringFromJSstr(JSString str) {
+	auto length = JSStringGetLength(str);
+	auto buffer = new char[length];
+	JSStringGetUTF8CString(str, buffer, length);
+	
+	return (string)buffer;
 }
