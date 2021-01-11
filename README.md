@@ -14,8 +14,8 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 ### Status
 
 * For now only CPU rendering, GPU ist yet to come. (Please check out [IanByuns work](https://github.com/IanByun/ofxUltralight-byun) for a GPU solution.)
-* Mouse klick implementation, but no scrollwheel so far. 
-* Only beginning of keyboard implementation.
+* Mouse klick and scroll wheel implementation. 
+* Basic keyboard implementation.
 * Only windows for now. I will definetely do a Linux Version, though.
 * *example-basic-CPU* shows how to use in general.
 * *example-communication-GUI* shows how to do communication between Broser (JS) and OF, both directions.
