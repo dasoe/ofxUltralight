@@ -15,6 +15,7 @@ public:
 	void mouseMoved(int x, int y);
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
+	void mouseScrolled(int x, int y, float scrollX, float scrollY);
 
 	ofxUltralight ul;
 

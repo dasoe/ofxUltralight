@@ -139,7 +139,6 @@ void ofxUltralight::keyPressed(int key) {
 	int text = key;
 	// get the correct virtual key codes
 	int vk = key;
-
 	switch (key) {
 		case OF_KEY_LEFT:
 			vk = KeyCodes::GK_LEFT;
@@ -164,15 +163,30 @@ void ofxUltralight::keyPressed(int key) {
 			vk = KeyCodes::GK_DECIMAL;
 			break;
 		case -1:
-			return;
+			break;
+
 		case OF_KEY_RETURN:
 			vk = KeyCodes::GK_RETURN;
 			return;
-		case OF_KEY_SHIFT:
-			vk = KeyCodes::GK_SHIFT;
+		case OF_KEY_LEFT_SHIFT:
+			vk = KeyCodes::GK_LSHIFT;
 			return;
-		case OF_KEY_TAB:
-			// don't insert anything
+		case OF_KEY_RIGHT_SHIFT:
+			vk = KeyCodes::GK_RSHIFT;
+			return;
+		case OF_KEY_LEFT_CONTROL:
+			vk = KeyCodes::GK_LCONTROL;
+			return;
+		case OF_KEY_RIGHT_CONTROL:
+			vk = KeyCodes::GK_RCONTROL;
+			return;
+		case OF_KEY_LEFT_ALT:
+			return;
+		case OF_KEY_RIGHT_ALT:
+			return;
+		case OF_KEY_LEFT_COMMAND:
+			return;
+		case OF_KEY_RIGHT_COMMAND:
 			return;
 		default:
 			break;
@@ -183,10 +197,9 @@ void ofxUltralight::keyPressed(int key) {
 	// You'll need to generate a key identifier from the virtual key code
 	// when synthesizing events. This function is provided in KeyEvent.h
 	evt.virtual_key_code = vk;
-	evt.virtual_key_code = vk;
 	evt.native_key_code = key;
-	evt.text = ofToString((char)text).c_str();
-	evt.unmodified_text = ofToString((char)text).c_str();
+	evt.text = ofToString( (char)text ).c_str();
+	evt.unmodified_text = ofToString( (char)text ).c_str();
 	//evt.modifiers = (char)OF_KEY_MODIFIER;
 	GetKeyIdentifierFromVirtualKeyCode(evt.virtual_key_code, evt.key_identifier);
 	view->FireKeyEvent(evt);
@@ -194,12 +207,11 @@ void ofxUltralight::keyPressed(int key) {
 	KeyEvent evt2;
 	evt2.type = KeyEvent::kType_Char;
 	evt2.virtual_key_code = vk;
-	evt2.virtual_key_code = vk;
 	evt2.native_key_code = key;
-	evt2.text = ofToString((char)text).c_str();
-	evt2.unmodified_text = ofToString((char)text).c_str();
+	evt2.text = ofToString( (char)text ).c_str();
+	evt2.unmodified_text = ofToString( (char)text ).c_str();
 	//evt2.modifiers = (char)OF_KEY_MODIFIER;
-	evt2.unmodified_text = ofToString((char)key).c_str(); // If not available, set to same as evt.text
+	evt2.unmodified_text = ofToString( (char)key ).c_str(); // If not available, set to same as evt.text
 
 	view->FireKeyEvent(evt2);
 }
@@ -260,7 +272,12 @@ void ofxUltralight::mouseExited(int x, int y) {
 
 //--------------------------------------------------------------
 void ofxUltralight::mouseScrolled(int x, int y, float scrollX, float scrollY) {
+	ScrollEvent scroll_event;
+	scroll_event.type = ScrollEvent::kType_ScrollByPixel;
+	scroll_event.delta_x = scrollX * 30;
+	scroll_event.delta_y = scrollY * 30;
 
+	view->FireScrollEvent(scroll_event);
 }
 
 //--------------------------------------------------------------

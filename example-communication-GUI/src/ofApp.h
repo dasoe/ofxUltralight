@@ -20,6 +20,7 @@ class ofApp : public ofBaseApp{
 		void mouseReleased(int x, int y, int button);
 		void mouseEntered(int x, int y);
 		void mouseExited(int x, int y);
+		void mouseScrolled(int x, int y, float scrollX, float scrollY);
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);

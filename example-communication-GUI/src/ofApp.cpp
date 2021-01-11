@@ -122,6 +122,10 @@ void ofApp::mouseReleased(int x, int y, int button) {
 
 }
 
+//--------------------------------------------------------------
+void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY) {
+	ul.mouseScrolled(x, y, scrollX, scrollY);
+}
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
