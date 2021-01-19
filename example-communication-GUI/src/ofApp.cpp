@@ -13,7 +13,7 @@ void ofApp::setup(){
 	// url or file is distinguished automatically by checking the beginning of the string (http(s))
 
 	// ul.setup(1400, 700, "https://de.wikipedia.org/wiki/Eisvogel");
-	ul.setup( 600, 400, ofVec2f(20,40), "file.html" );
+	ul.setup( 600, 400, ofVec2f(20,40), "file:///file.html" );
 
 	// #### OF Stuff ### 
 	positionCircle = ofVec2f(750, 400);

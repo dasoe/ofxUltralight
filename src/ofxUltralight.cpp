@@ -19,6 +19,7 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 	platform.set_font_loader(GetPlatformFontLoader());
 	platform.set_config(config);
 	platform.set_logger(new MyLogger());
+	platform.set_file_system(GetPlatformFileSystem("data"));
 
 	//gpu_driver = make_shared<GPUDriverGL>(1);
 	//platform.set_gpu_driver(gpu_driver.get());
@@ -26,23 +27,36 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 	renderer = Renderer::Create();
 	view = renderer->CreateView(width, height, false, nullptr);
 	ofLogVerbose("given string is '" + url + "'");
-	string search = "http" +':' + '//';
-	string search2 = "https" + ':' + '//';
+	
+	load(url);
+
+	view->Focus();
+	view->set_load_listener(this);
+}
+
+//--------------------------------------------------------------
+void ofxUltralight::load(string url) {
+
 	bool isURL = false;
 	// there seem to be problem with colons, so some workaround. Feel free to fix it...
-	if ( url.rfind("http", 0) == 0 && url.rfind("//", 6) ) {
+	if (url.rfind("http", 0) == 0 && url.rfind("//", 6)) {
 		ofLogVerbose("starts with http:// ... set it as a URI");
 		isURL = true;
 	}
-	if ( url.rfind("https", 0) == 0 && url.rfind("//", 7) ) {
+	if (url.rfind("https", 0) == 0 && url.rfind("//", 7)) {
 		ofLogVerbose("starts with https:// ... set it as a URI");
+		isURL = true;
+	}
+	if (url.rfind("file", 0) == 0 && url.rfind("///", 6)) {
+		ofLogVerbose("starts with file:/// ... set it as a URI");
 		isURL = true;
 	}
 
 	if (isURL) {
 		view->LoadURL(url.c_str());
-	} else {
-		ofLogVerbose("think it's a File - try to load it");
+	}
+	else {
+		ofLogVerbose("maybe it's still a File - try to load it");
 		ofBuffer buffer = ofBufferFromFile(url);
 		string content;
 		if (buffer.size()) {
@@ -51,12 +65,12 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 				content += *it;
 
 			}
+			view->LoadHTML(content.c_str());
 		}
-		view->LoadHTML(content.c_str());
+		else {
+			view->LoadHTML( url.c_str() );
+		}
 	}
-
-	view->Focus();
-	view->set_load_listener(this);
 }
 
 //--------------------------------------------------------------
