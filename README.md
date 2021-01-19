@@ -1,5 +1,5 @@
 
-[openframeworks](https://openframeworks.cc/) 0.11.0 addon for ultralight-sdk-1.2-win https://ultralig.ht/ 
+[openframeworks](https://openframeworks.cc/) 0.11.0 addon for ultralight-sdk-1.2-win https://ultralig.ht/
 Ultralight (c) 2018 Ultralight, Inc. Ultralight is a trademark of Ultralight, Inc.
 
 ### About
@@ -14,8 +14,11 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 ### Status
 
 * For now only CPU rendering, GPU ist yet to come. (Please check out [IanByuns work](https://github.com/IanByun/ofxUltralight-byun) for a GPU solution.)
-* Mouse klick and scroll wheel implementation. 
+* Basic loading of URLs, Files and raw HTML.
+* Mouse klick and scroll wheel implementation.
 * Basic keyboard implementation.
+* High-level (easy to understand and use) code in your App.
+* Communication OF->Ultralight and Ultralight->OF.
 * Only windows for now. I will definetely do a Linux Version, though.
 * *example-basic-CPU* shows how to use in general.
 * *example-communication-GUI* shows how to do communication between Broser (JS) and OF, both directions.
