@@ -28,10 +28,16 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 	view = renderer->CreateView(width, height, false, nullptr);
 	ofLogVerbose("given string is '" + url + "'");
 	
+	//inspectorView = view->inspector();
+	//inspectorView->Resize(700, 300);
+	//string ipath = ofToDataPath("", true) + "/inspector/Main.html";
+	//inspectorView->LoadURL( ipath.c_str() );
+
 	load(url);
 
 	view->Focus();
 	view->set_load_listener(this);
+	view->set_view_listener(this);
 }
 
 //--------------------------------------------------------------
@@ -75,14 +81,30 @@ void ofxUltralight::load(string url) {
 
 //--------------------------------------------------------------
 void ofxUltralight::OnDOMReady(ultralight::View* caller, uint64_t frame_id, bool is_main_frame, const String& url) {
-	ofLogVerbose( "######## DOM ready ##########" );
+	ofLogVerbose( "Ultralight DOM ready" );
 	DOMready = true;
 
 	Ref<JSContext> locked_context = caller->LockJSContext();
 	SetJSContext(locked_context.get());
-	// do this directyl in you ofApp
-	//JSObject global = JSGlobalObject();
-	//global["callMessage"] = BindJSCallback(&ofxUltralight::Message);
+}
+
+//--------------------------------------------------------------
+void ofxUltralight::OnAddConsoleMessage(View* caller,
+	MessageSource source,
+	MessageLevel level,
+	const String& message,
+	uint32_t line_number,
+	uint32_t column_number,
+	const String& source_id) {
+	
+	// give out the console Message via OF Logging
+	auto getMessage = (string) Stringify(source);
+	ofLogNotice( "[Ultralight: Console]: [" + getMessage + "] [" + Stringify(level) + "] " + ToUTF8(message) );
+	if (source == kMessageSource_JS) {
+		ofLogNotice( " (" + ToUTF8(source_id) + " @ line " + ofToString(line_number) + ", col " + ofToString(column_number) + ")" );
+	}
+	std::cout << std::endl;
+
 }
 
 //--------------------------------------------------------------
@@ -93,14 +115,6 @@ void ofxUltralight::update() {
 //--------------------------------------------------------------
 void ofxUltralight::draw() {
 	renderer->Render();
-
-	///
-/// Check if our Surface is dirty (pixels have changed).
-///
-
-		///
-		/// Psuedo-code to upload Surface's bitmap to GPU texture.
-		///
 
 	///
 	/// Cast it to a BitmapSurface.
@@ -122,7 +136,7 @@ void ofxUltralight::draw() {
 		uint32_t stride = bitmap->row_bytes();
 
 		unsigned char* pixels2 = (unsigned char*)pixels;
-		// swap R and B channels (does nnot work in ladData later, don't know why.)
+		// swap R and B channels (does nnot work in loadData later, don't know why.)
 		oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_R, GL_BLUE);
 		oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_B, GL_RED);
 		// load the pixels to ofTexture
@@ -133,17 +147,11 @@ void ofxUltralight::draw() {
 
 		/// Clear the dirty bounds.
 		bitmap_surface->ClearDirtyBounds();
-
-		// also do get JS stuff, as context may have changed
-
-		  // Acquire the JS execution context for the current page.
-		  //
-		  // This call will lock the execution context for the current
-		  // thread as long as the Ref<> is alive.
-		  //
 		
 	}
 	oeTexture.draw(offset.x, offset.y);
+
+
 
 
 }
