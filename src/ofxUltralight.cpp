@@ -35,13 +35,12 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 
 	load(url);
 
-	view->Focus();
-	view->set_load_listener(this);
-	view->set_view_listener(this);
+
 }
 
 //--------------------------------------------------------------
 void ofxUltralight::load(string url) {
+	DOMready = false;
 
 	bool isURL = false;
 	// there seem to be problem with colons, so some workaround. Feel free to fix it...
@@ -77,6 +76,9 @@ void ofxUltralight::load(string url) {
 			view->LoadHTML( url.c_str() );
 		}
 	}
+	view->Focus();
+	view->set_load_listener(this);
+	view->set_view_listener(this);
 }
 
 //--------------------------------------------------------------
@@ -120,8 +122,8 @@ void ofxUltralight::draw() {
 	/// Cast it to a BitmapSurface.
 	///
 	BitmapSurface* bitmap_surface = (BitmapSurface*)(view->surface());
-	if ( !bitmap_surface->dirty_bounds().IsEmpty()) {
-		ofLogVerbose("dirty, so draw");
+	if ( !bitmap_surface->dirty_bounds().IsEmpty() && !view->is_loading() ) {
+		//ofLogVerbose("dirty, so draw");
 
 		///
 	/// Get the underlying bitmap.
