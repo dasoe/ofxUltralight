@@ -2,24 +2,40 @@
 
 
 void ofxUltralight::setup(int width, int height, string url) {
-	setup(width, height, ofVec2f(0, 0), url);
+	setup(width, height, ofVec2f(0, 0), url, false);
+	DOMready = false;
+}
+
+void ofxUltralight::setup(int width, int height, string url, bool useGPU) {
+	setup(width, height, ofVec2f(0, 0), url, useGPU);
 	DOMready = false;
 }
 
 void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
+	setup(width, height, t_offset, url, false);
+	DOMready = false;
+}
+
+void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url, bool useGPU) {
 	//ofLogNotice(ofToDataPath("resources").c_str());
 	offset = t_offset;
 
 	config.resource_path = "../../../../addons/ofxUltralight/libs/resources";
-	config.use_gpu_renderer = false;
+	config.use_gpu_renderer = useGPU;
 	config.device_scale = 1.0;
 	config.user_agent = "Mozilla/5.0 (Linux; Android 8.1.0; SM-G965F Build/OPM2.171019.029) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/7.2 Chrome/59.0.3071.125 Mobile Safari/537.36";
 
+
 	auto& platform = Platform::instance();
-	platform.set_font_loader(GetPlatformFontLoader());
-	platform.set_config(config);
-	platform.set_logger(new MyLogger());
-	platform.set_file_system(GetPlatformFileSystem("data"));
+	if (useGPU) {
+		platform.set_gpu_driver(glDriver);
+	}
+	else {
+		platform.set_font_loader(GetPlatformFontLoader());
+		platform.set_config(config);
+		platform.set_logger(new MyLogger());
+		platform.set_file_system(GetPlatformFileSystem("data"));
+	}
 
 	//gpu_driver = make_shared<GPUDriverGL>(1);
 	//platform.set_gpu_driver(gpu_driver.get());
@@ -34,8 +50,6 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 	//inspectorView->LoadURL( ipath.c_str() );
 
 	load(url);
-
-
 }
 
 //--------------------------------------------------------------

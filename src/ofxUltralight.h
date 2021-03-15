@@ -5,7 +5,7 @@
 #include <JavaScriptCore/JavaScript.h>
 #include <AppCore/Platform.h>
 #include <AppCore/JSHelpers.h>
-
+#include <GPUDriverGL.h>
 
 
 using namespace ultralight;
@@ -116,7 +116,10 @@ public:
 		bool DOMready;
 
 		void setup(int width, int height, string url);
+		void setup(int width, int height, string url, bool useGPU);
+
 		void setup(int width, int height, ofVec2f t_offset, string url);
+		void setup(int width, int height, ofVec2f t_offset, string url, bool useGPU);
 		void load(string url);
 		void update();
 		void draw();
@@ -143,4 +146,6 @@ public:
 
 		ofVec2f offset;
 		ofTexture oeTexture, inspectorTexture;
+
+		GPUDriverGL * glDriver;
 };
