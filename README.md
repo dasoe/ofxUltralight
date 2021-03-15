@@ -2,7 +2,7 @@
 [openframeworks](https://openframeworks.cc/) 0.11.0 addon for ultralight-sdk-1.2-win https://ultralig.ht/
 Ultralight (c) 2018 Ultralight, Inc. Ultralight is a trademark of Ultralight, Inc.
 
-### About
+## About
 
 With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/) some weeks ago, implementation of Ultralight in other Apps has become *much* easier. So I wrote this addon from scratch. This is only a beginning and at the moment mostly for my usecase:
 * Heavily layouted One-Page content, that can be changed easily without having to adjust my OF App
@@ -11,7 +11,7 @@ With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/) so
 My focus is not on perfect code but on ease of use and integration. Of course the addon can be adjusted and developed. I am happy if it will be an all-purpose Browser addon one day. Join in, everybody. 
 Also: I am not a C++ developer. I am more than happy to learn and improve the code!
 
-### Status
+## Status
 
 * For now only CPU rendering, GPU ist yet to come. (Please check out [IanByuns work](https://github.com/IanByun/ofxUltralight-byun) for a GPU solution.)
 * Basic loading of URLs, Files and raw HTML.
@@ -24,6 +24,7 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 * *example-basic-CPU* shows how to use in general.
 * *example-communication-GUI* shows how to do communication between Broser (JS) and OF, both directions.
 
+### Just started branch "gpu". It will not work for quite some time.
 
 ## Installation
 
