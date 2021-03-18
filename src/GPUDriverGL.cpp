@@ -73,6 +73,8 @@ inline char const* glErrorString(GLenum const err) noexcept
 	}
 }
 
+
+
 inline std::string GetShaderLog(GLuint shader_id) {
 	GLint length, result;
 	glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &length);
@@ -131,6 +133,7 @@ namespace ultralight {
 		frame_buffer_map[0] = 0;
 	}
 
+
 	void GPUDriverGL::CreateTexture(uint32_t texture_id,
 		Ref<Bitmap> bitmap) {
 		GLuint tex_id;
@@ -157,7 +160,7 @@ namespace ultralight {
 				GL_RED, GL_UNSIGNED_BYTE, pixels);
 			bitmap->UnlockPixels();
 		}
-		else if (bitmap->format() == kBitmapFormat_A8_UNORM) {
+		else if (bitmap->format() == kBitmapFormat_BGRA8_UNORM_SRGB) {
 			const void* pixels = bitmap->LockPixels();
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bitmap->width(), bitmap->height(), 0,
 				GL_BGRA, GL_UNSIGNED_BYTE, pixels);
@@ -175,6 +178,13 @@ namespace ultralight {
 		glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
 		CHECK_GL();
 	}
+
+	void GPUDriverGL::BeginDrawing() {
+	}
+
+	void GPUDriverGL::EndDrawing() {
+	}
+
 
 	void GPUDriverGL::UpdateTexture(uint32_t texture_id,
 		Ref<Bitmap> bitmap) {

@@ -147,5 +147,5 @@ public:
 		ofVec2f offset;
 		ofTexture oeTexture, inspectorTexture;
 
-		GPUDriverGL * glDriver;
+		//shared_ptr<GPUDriverGL> glDriver;
 };

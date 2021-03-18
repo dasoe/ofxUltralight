@@ -22,9 +22,9 @@ namespace ultralight {
 
 		virtual void EndSynchronize() override { }
 
-		//virtual void BeginDrawing() override;
+		virtual void BeginDrawing() override;
 
-		//virtual void EndDrawing() override;
+		virtual void EndDrawing() override;
 
 		virtual uint32_t NextTextureId() override { return next_texture_id_++; }
 

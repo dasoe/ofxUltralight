@@ -28,17 +28,18 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url, b
 
 	auto& platform = Platform::instance();
 	if (useGPU) {
-		platform.set_gpu_driver(glDriver);
+		ofLogVerbose("GPU Driver chosen for Ultralight");
+		// TODO: Why does this not work (glDriver is defined in .h?)
+		//platform.set_gpu_driver(glDriver.get());
+		// instead I have to use (thanks Ian Byun!)
+		gpu_driver = make_shared<GPUDriverGL>(1);
+		platform.set_gpu_driver(gpu_driver.get());
 	}
-	else {
-		platform.set_font_loader(GetPlatformFontLoader());
-		platform.set_config(config);
-		platform.set_logger(new MyLogger());
-		platform.set_file_system(GetPlatformFileSystem("data"));
-	}
+	platform.set_font_loader(GetPlatformFontLoader());
+	platform.set_config(config);
+	platform.set_logger(new MyLogger());
+	platform.set_file_system(GetPlatformFileSystem("data"));
 
-	//gpu_driver = make_shared<GPUDriverGL>(1);
-	//platform.set_gpu_driver(gpu_driver.get());
 
 	renderer = Renderer::Create();
 	view = renderer->CreateView(width, height, false, nullptr);
@@ -131,6 +132,8 @@ void ofxUltralight::update() {
 //--------------------------------------------------------------
 void ofxUltralight::draw() {
 	renderer->Render();
+
+	// NEXT: of course there's no bitmap surface when using GPU
 
 	///
 	/// Cast it to a BitmapSurface.
