@@ -6,6 +6,7 @@
 #include <AppCore/Platform.h>
 #include <AppCore/JSHelpers.h>
 #include <GPUDriverGL.h>
+#include <opencv.hpp>
 
 
 using namespace ultralight;
@@ -138,14 +139,25 @@ public:
 		void gotMessage(ofMessage msg);
 		string getStringFromJSstr(JSString str);
 
+		void ReadTextureToPBO(GLuint tex_id, GLuint pbo_id[2], OUT cv::Mat& pixel_data);
+		void CopyTextureFromFBO(GLuint fbo_id, OUT ofTexture & tex);
+		GLuint GeneratePBOReader(int width, int height, int numChannels = 4);
+
+		bool useGPU;
+
 		Config config;
-		shared_ptr<GPUDriver> gpu_driver;
+		shared_ptr<GPUDriverGL> gpu_driver;
 		RefPtr<Renderer> renderer;
 		RefPtr<View> view, inspectorView;
 		JSContextRef jsContext;
 
 		ofVec2f offset;
 		ofTexture oeTexture, inspectorTexture;
+		shared_ptr<ofTexture>  textureForGPU;
+		cv::Mat mat_rgba;
+		cv::Mat mat_bgr;			
+		GLuint pbo_id[2];			
+
 
 		//shared_ptr<GPUDriverGL> glDriver;
 };

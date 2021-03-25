@@ -1,5 +1,13 @@
 ﻿#include "ofxUltralight.h"
 
+#define FATAL(x) { std::stringstream str; \
+  str << "[ERROR] " << __FUNCSIG__ << " @ Line " << __LINE__ << ":\n\t" << x << std::endl; \
+  OutputDebugStringA(str.str().c_str()); \
+  std::cerr << str.str() << std::endl; \
+  /*__debugbreak();*/ }
+static inline char const* glErrorString(GLenum const err) noexcept;
+
+#define CHECK_GL()  {if (GLenum err = glGetError()) FATAL(glErrorString(err)) }
 
 void ofxUltralight::setup(int width, int height, string url) {
 	setup(width, height, ofVec2f(0, 0), url, false);
@@ -16,10 +24,10 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 	DOMready = false;
 }
 
-void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url, bool useGPU) {
+void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url, bool useGPU_l) {
 	//ofLogNotice(ofToDataPath("resources").c_str());
 	offset = t_offset;
-
+	useGPU = useGPU_l;
 	config.resource_path = "../../../../addons/ofxUltralight/libs/resources";
 	config.use_gpu_renderer = useGPU;
 	config.device_scale = 1.0;
@@ -34,12 +42,19 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url, b
 		// instead I have to use (thanks Ian Byun!)
 		gpu_driver = make_shared<GPUDriverGL>(1);
 		platform.set_gpu_driver(gpu_driver.get());
+		textureForGPU = make_shared<ofTexture>();
+		textureForGPU->allocate(width, height, GL_RGB8, ofGetUsingArbTex(), GL_RGBA, GL_UNSIGNED_BYTE);
+		//mat_rgba = cv::Mat::zeros(height, width, CV_8UC4);
+		//mat_bgr = cv::Mat::zeros(height, width, CV_8UC3);
+		//pbo_id[0] = GeneratePBOReader(width, height);
+		//pbo_id[1] = GeneratePBOReader(width, height);
+
 	}
 	platform.set_font_loader(GetPlatformFontLoader());
 	platform.set_config(config);
 	platform.set_logger(new MyLogger());
 	platform.set_file_system(GetPlatformFileSystem("data"));
-
+	
 
 	renderer = Renderer::Create();
 	view = renderer->CreateView(width, height, false, nullptr);
@@ -135,41 +150,61 @@ void ofxUltralight::draw() {
 
 	// NEXT: of course there's no bitmap surface when using GPU
 
-	///
-	/// Cast it to a BitmapSurface.
-	///
-	BitmapSurface* bitmap_surface = (BitmapSurface*)(view->surface());
-	if ( !bitmap_surface->dirty_bounds().IsEmpty() && !view->is_loading() ) {
-		//ofLogVerbose("dirty, so draw");
+	if (useGPU) {
+		gpu_driver->DrawCommandList();
+
+		auto driver = dynamic_pointer_cast<GPUDriverGL>(gpu_driver);
+		auto frame_map = driver->GetFrameMap();
+		auto texture_map = driver->GetTextureMap();
+		auto render_target = view->render_target();
+
+		GLuint fbo_id = frame_map[render_target.render_buffer_id];
+		GLuint tex_id = texture_map[render_target.texture_id];
+
+		CopyTextureFromFBO(fbo_id, *textureForGPU);
+		//ReadTextureToPBO(tex_id, pbo_id, mat_rgba);
+		//cv::cvtColor(mat_rgba, mat_bgr, cv::COLOR_RGBA2BGR);
+		ofLogNotice( "Size of Texture: " + ofToString( textureForGPU->getHeight() ) + "/" + ofToString( textureForGPU->getHeight() ) );
+		textureForGPU->draw(offset.x, offset.y);
+	}
+	else {
 
 		///
-	/// Get the underlying bitmap.
-	///
-		RefPtr<Bitmap> bitmap = bitmap_surface->bitmap();
+		/// Cast it to a BitmapSurface.
+		///
+		/// 
+		BitmapSurface* bitmap_surface = (BitmapSurface*)(view->surface());
+		if (!bitmap_surface->dirty_bounds().IsEmpty() && !view->is_loading()) {
+			//ofLogVerbose("dirty, so draw");
 
-		void* pixels = bitmap->LockPixels();
+			///
+		/// Get the underlying bitmap.
+		///
+			RefPtr<Bitmap> bitmap = bitmap_surface->bitmap();
 
-		/// Get the bitmap dimensions.
-		uint32_t width = bitmap->width();
-		uint32_t height = bitmap->height();
-		uint32_t stride = bitmap->row_bytes();
+			void* pixels = bitmap->LockPixels();
 
-		unsigned char* pixels2 = (unsigned char*)pixels;
-		// swap R and B channels (does nnot work in loadData later, don't know why.)
-		oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_R, GL_BLUE);
-		oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_B, GL_RED);
-		// load the pixels to ofTexture
-		oeTexture.loadData(pixels2, width, height, GL_RGBA);
+			/// Get the bitmap dimensions.
+			uint32_t width = bitmap->width();
+			uint32_t height = bitmap->height();
+			uint32_t stride = bitmap->row_bytes();
 
-		/// Unlock the Bitmap when we are done.
-		bitmap->UnlockPixels();
+			unsigned char* pixels2 = (unsigned char*)pixels;
+			// swap R and B channels (does nnot work in loadData later, don't know why.)
+			oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_R, GL_BLUE);
+			oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_B, GL_RED);
+			// load the pixels to ofTexture
+			oeTexture.loadData(pixels2, width, height, GL_RGBA);
 
-		/// Clear the dirty bounds.
-		bitmap_surface->ClearDirtyBounds();
-		
+			/// Unlock the Bitmap when we are done.
+			bitmap->UnlockPixels();
+
+			/// Clear the dirty bounds.
+			bitmap_surface->ClearDirtyBounds();
+
+		}
+		oeTexture.draw(offset.x, offset.y);
 	}
-	oeTexture.draw(offset.x, offset.y);
-
 
 
 
@@ -343,4 +378,55 @@ string ofxUltralight::getStringFromJSstr(JSString str) {
 	JSStringGetUTF8CString(str, buffer, length);
 	
 	return (string)buffer;
+}
+
+
+//--------------------------------------------------------------
+GLuint ofxUltralight::GeneratePBOReader(int width, int height, int numChannels) {
+	int data_size = width * height * numChannels;
+	GLuint  pbo;
+	glGenBuffers(1, &pbo);
+	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo);
+	glBufferData(GL_PIXEL_PACK_BUFFER, data_size, NULL, GL_STATIC_READ);
+	glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+	return pbo;
+}
+
+
+//--------------------------------------------------------------
+void ofxUltralight::ReadTextureToPBO(GLuint tex_id, GLuint pbo_id[2], OUT cv::Mat& pixel_data) {
+	int data_size = pixel_data.total() * pixel_data.elemSize();
+	glFinish();
+
+	//gpu ºÒ·¯¿À±â ¹öÆÛ
+	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo_id[0]);
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+		(GLvoid*)0 // buffer¿¡¼­ ½ÃÀÛÇÏ´Â byte ´ÜÀ§ offset. cpu memory°¡ ¾Æ´Ï´Ù!
+	);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//cpu ¾²±â ¹öÆÛ
+	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo_id[1]);
+	GLubyte* mappedBuffer = (GLubyte*)glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
+
+	if (mappedBuffer) {
+		memcpy((void*)pixel_data.data, mappedBuffer, data_size);
+		glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
+	}
+
+	glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+	std::swap(pbo_id[0], pbo_id[1]); //¹öÆÛ ½º¿Ò
+}
+
+//--------------------------------------------------------------
+void ofxUltralight::CopyTextureFromFBO(GLuint fbo_id, OUT ofTexture& tex) {
+	int tex_id = tex.texData.textureID;
+	int tex_target = tex.texData.textureTarget;
+
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo_id);
+	glBindTexture(tex_target, tex_id);
+	glCopyTexSubImage2D(tex_target, 0, 0, 0, 0, 0, tex.getWidth(), tex.getHeight()); //sub°¡ ´õ ºü¸£´Ù?
+	glBindTexture(tex_target, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

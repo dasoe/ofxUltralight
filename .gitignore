@@ -7,7 +7,12 @@
 *.VC.db
 .vs/
 
+example-GPU/bin/
+
+/*/.vs/
 /*/[Oo]bj/
 /*/[Rr]elease/
 /*/[Dd]ebug/
 /*/[Bb]uild/
+
+example-GPU/addons/
