@@ -145,12 +145,51 @@ void ofxUltralight::update() {
 }
 
 //--------------------------------------------------------------
+ofTexture ofxUltralight::getPixelTexture() {
+	///
+	/// Cast it to a BitmapSurface.
+	///
+	/// 
+	BitmapSurface* bitmap_surface = (BitmapSurface*)(view->surface());
+	if (!bitmap_surface->dirty_bounds().IsEmpty() && !view->is_loading()) {
+		//ofLogVerbose("dirty, so draw");
+
+		///
+	/// Get the underlying bitmap.
+	///
+		RefPtr<Bitmap> bitmap = bitmap_surface->bitmap();
+
+		void* pixels = bitmap->LockPixels();
+
+		/// Get the bitmap dimensions.
+		uint32_t width = bitmap->width();
+		uint32_t height = bitmap->height();
+		uint32_t stride = bitmap->row_bytes();
+
+		unsigned char* pixels2 = (unsigned char*)pixels;
+		// swap R and B channels (does not work in loadData later, don't know why.)
+		oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_R, GL_BLUE);
+		oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_B, GL_RED);
+		// load the pixels to ofTexture
+		oeTexture.loadData(pixels2, width, height, GL_RGBA);
+
+		/// Unlock the Bitmap when we are done.
+		bitmap->UnlockPixels();
+
+		/// Clear the dirty bounds.
+		bitmap_surface->ClearDirtyBounds();
+
+	}
+	return oeTexture;
+}
+
+
+//--------------------------------------------------------------
 void ofxUltralight::draw() {
 	renderer->Render();
 
-	// NEXT: of course there's no bitmap surface when using GPU
-
 	if (useGPU) {
+		//using GPU
 		gpu_driver->DrawCommandList();
 
 		auto driver = dynamic_pointer_cast<GPUDriverGL>(gpu_driver);
@@ -161,52 +200,29 @@ void ofxUltralight::draw() {
 		GLuint fbo_id = frame_map[render_target.render_buffer_id];
 		GLuint tex_id = texture_map[render_target.texture_id];
 
+	    uint32_t tex_id2 = render_target.texture_id;
+
+
+
 		CopyTextureFromFBO(fbo_id, *textureForGPU);
 		//ReadTextureToPBO(tex_id, pbo_id, mat_rgba);
 		//cv::cvtColor(mat_rgba, mat_bgr, cv::COLOR_RGBA2BGR);
-		ofLogNotice( "Size of Texture: " + ofToString( textureForGPU->getHeight() ) + "/" + ofToString( textureForGPU->getHeight() ) );
-		textureForGPU->draw(offset.x, offset.y);
+		textureForGPU->draw(offset.x, offset.y, textureForGPU->getWidth() + offset.x , textureForGPU->getHeight() + offset.y );
+		//ofLogNotice( "Size of Texture: " + ofToString( textureForGPU->getWidth() ) + "/" + ofToString( textureForGPU->getHeight() ) );
+		//textureForGPU->bind();
+		//ofDrawRectangle(0,0,1000,500);
+		//textureForGPU->unbind();
+
+
+
+		//cv::imshow("mat_bgr", mat_bgr);
+		
+
 	}
 	else {
-
-		///
-		/// Cast it to a BitmapSurface.
-		///
-		/// 
-		BitmapSurface* bitmap_surface = (BitmapSurface*)(view->surface());
-		if (!bitmap_surface->dirty_bounds().IsEmpty() && !view->is_loading()) {
-			//ofLogVerbose("dirty, so draw");
-
-			///
-		/// Get the underlying bitmap.
-		///
-			RefPtr<Bitmap> bitmap = bitmap_surface->bitmap();
-
-			void* pixels = bitmap->LockPixels();
-
-			/// Get the bitmap dimensions.
-			uint32_t width = bitmap->width();
-			uint32_t height = bitmap->height();
-			uint32_t stride = bitmap->row_bytes();
-
-			unsigned char* pixels2 = (unsigned char*)pixels;
-			// swap R and B channels (does nnot work in loadData later, don't know why.)
-			oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_R, GL_BLUE);
-			oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_B, GL_RED);
-			// load the pixels to ofTexture
-			oeTexture.loadData(pixels2, width, height, GL_RGBA);
-
-			/// Unlock the Bitmap when we are done.
-			bitmap->UnlockPixels();
-
-			/// Clear the dirty bounds.
-			bitmap_surface->ClearDirtyBounds();
-
-		}
-		oeTexture.draw(offset.x, offset.y);
+		// using CPU (bitmap implementation of ultralight)
+		getPixelTexture().draw(offset.x, offset.y);
 	}
-
-
 
 }
 

@@ -92,6 +92,8 @@ inline std::string GetProgramLog(GLuint program_id) {
 }
 
 static GLuint LoadShaderFromSource(GLenum shader_type, const char* source, const char* filename) {
+
+	//std::cout << "oeDebug: Load Shader from source " << source << "-" << filename << std::endl ;
 	GLint compileStatus;
 	GLuint shader_id = glCreateShader(shader_type);
 	glShaderSource(shader_id, 1, &source, NULL);
@@ -104,6 +106,8 @@ static GLuint LoadShaderFromSource(GLenum shader_type, const char* source, const
 }
 
 static GLuint LoadShaderFromFile(GLenum shader_type, const char* filename) {
+	//std::cout << "oeDebug: Load Shader from file " << std::endl;
+
 	std::string shader_source;
 	std::string path = std::string(SHADER_PATH) + filename;
 	ReadFile(path.c_str(), shader_source);

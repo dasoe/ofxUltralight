@@ -123,6 +123,7 @@ public:
 		void setup(int width, int height, ofVec2f t_offset, string url, bool useGPU);
 		void load(string url);
 		void update();
+		ofTexture getPixelTexture();
 		void draw();
 
 		void keyPressed(int key);
