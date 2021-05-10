@@ -4,7 +4,9 @@ Ultralight (c) 2018 Ultralight, Inc. Ultralight is a trademark of Ultralight, In
 
 ## About
 
-With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/) some weeks ago, implementation of Ultralight in other Apps has become *much* easier. So I wrote this addon from scratch. This is only a beginning and at the moment mostly for my usecase:
+### Just started branch "gpu". It will not work for quite some time. Main branch (CPU) is working.
+
+With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/), implementation of Ultralight in other Apps has become *much* easier. So I wrote this addon from scratch. This is only a beginning and at the moment mostly for my usecase:
 * Heavily layouted One-Page content, that can be changed easily without having to adjust my OF App
 * Simple GUI functionality (communication with the OF App, which has the power to do the advanced stuff)
 
@@ -24,7 +26,6 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 * *example-basic-CPU* shows how to use in general.
 * *example-communication-GUI* shows how to do communication between Broser (JS) and OF, both directions.
 
-### Just started branch "gpu". It will not work for quite some time.
 
 ## Installation
 
