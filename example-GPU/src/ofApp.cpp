@@ -12,7 +12,7 @@ void ofApp::setup() {
 	// last parameter is a boolean to switch on GPU rendering
 
 	ul.setup(1400, 700, "https://de.wikipedia.org/wiki/Eisvogel", true);
-	// ul.setup( 600, 400, "file.html" );
+	// ul.setup( 600, 400, "file:///file.html" );
 }
 
 //--------------------------------------------------------------
@@ -24,11 +24,23 @@ void ofApp::update() {
 void ofApp::draw() {
 	ul.draw();
 	ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()), 10, 10);
+	ofDrawBitmapStringHighlight( "q/w/e: load different sites/files (might take a moment...)" , 10, 30);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
 	ul.keyPressed(key);
+	switch (key) {
+	case 'q':
+		ul.load("https://openframeworks.cc");
+		break;
+	case 'w':
+		ul.load("https://de.wikipedia.org/wiki/Eisvogel");
+		break;
+	case 'e':
+		ul.load("file:///file.html");
+		break;
+	}
 }
 
 //--------------------------------------------------------------

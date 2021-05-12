@@ -202,19 +202,17 @@ void ofxUltralight::draw() {
 
 	    uint32_t tex_id2 = render_target.texture_id;
 
-
-
 		CopyTextureFromFBO(fbo_id, *textureForGPU);
-		//ReadTextureToPBO(tex_id, pbo_id, mat_rgba);
-		//cv::cvtColor(mat_rgba, mat_bgr, cv::COLOR_RGBA2BGR);
-		textureForGPU->draw(offset.x, offset.y, textureForGPU->getWidth() + offset.x , textureForGPU->getHeight() + offset.y );
+		textureForGPU->draw(offset.x, offset.y, textureForGPU->getWidth() , textureForGPU->getHeight() );
 		//ofLogNotice( "Size of Texture: " + ofToString( textureForGPU->getWidth() ) + "/" + ofToString( textureForGPU->getHeight() ) );
+		
 		//textureForGPU->bind();
 		//ofDrawRectangle(0,0,1000,500);
 		//textureForGPU->unbind();
 
 
-
+		//ReadTextureToPBO(tex_id, pbo_id, mat_rgba);
+		//cv::cvtColor(mat_rgba, mat_bgr, cv::COLOR_RGBA2BGR);
 		//cv::imshow("mat_bgr", mat_bgr);
 		
 

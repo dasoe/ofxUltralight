@@ -180,7 +180,6 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\libs\include\AppCore\GPUDriverImpl.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="..\..\..\addons\ofxOpenCv-4.1.1\src\ofxCvColorImage.cpp" />
@@ -192,9 +191,9 @@
     <ClCompile Include="..\..\..\addons\ofxOpenCv-4.1.1\src\ofxCvShortImage.cpp" />
     <ClCompile Include="..\..\..\addons\ofxUltralight\src\GPUDriverGL.cpp" />
     <ClCompile Include="..\..\..\addons\ofxUltralight\src\ofxUltralight.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\GPUDriverImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\libs\include\AppCore\GPUDriverImpl.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\addons\ofxOpenCv-4.1.1\src\ofxCvBlob.h" />
     <ClInclude Include="..\..\..\addons\ofxOpenCv-4.1.1\src\ofxCvColorImage.h" />
@@ -430,6 +429,7 @@
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\AppCore.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\CAPI.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\Defines.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\GPUDriverImpl.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\JSHelpers.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\Monitor.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\Overlay.h" />

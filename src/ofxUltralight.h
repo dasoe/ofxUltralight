@@ -155,9 +155,9 @@ public:
 		ofVec2f offset;
 		ofTexture oeTexture, inspectorTexture;
 		shared_ptr<ofTexture>  textureForGPU;
-		cv::Mat mat_rgba;
-		cv::Mat mat_bgr;			
-		GLuint pbo_id[2];			
+		//cv::Mat mat_rgba;
+		//cv::Mat mat_bgr;			
+		//GLuint pbo_id[2];			
 
 
 		//shared_ptr<GPUDriverGL> glDriver;
