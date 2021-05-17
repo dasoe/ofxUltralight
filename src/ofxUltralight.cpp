@@ -190,7 +190,9 @@ void ofxUltralight::draw() {
 
 	if (useGPU) {
 		//using GPU
-		gpu_driver->DrawCommandList();
+		if (gpu_driver->HasCommandsPending()) {
+			gpu_driver->DrawCommandList();
+		}
 
 		auto driver = dynamic_pointer_cast<GPUDriverGL>(gpu_driver);
 		auto frame_map = driver->GetFrameMap();
