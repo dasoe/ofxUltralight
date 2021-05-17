@@ -15,7 +15,7 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 
 ## Status
 
-* For now only CPU rendering, GPU ist yet to come. (Please check out [IanByuns work](https://github.com/IanByun/ofxUltralight-byun) for a GPU solution.)
+* GPU (this branch) ist not working at the moment. (Please check out [IanByuns work](https://github.com/IanByun/ofxUltralight-byun) for a GPU solution.)
 * Basic loading of URLs, Files and raw HTML.
 * Mouse klick and scroll wheel implementation.
 * Basic keyboard implementation.
