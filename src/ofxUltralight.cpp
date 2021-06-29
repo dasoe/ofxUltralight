@@ -194,29 +194,31 @@ void ofxUltralight::draw() {
 			gpu_driver->DrawCommandList();
 		}
 
-		auto driver = dynamic_pointer_cast<GPUDriverGL>(gpu_driver);
-		auto frame_map = driver->GetFrameMap();
-		auto texture_map = driver->GetTextureMap();
+		//auto driver = dynamic_pointer_cast<GPUDriverGL>(gpu_driver);
+		//auto frame_map = driver->GetFrameMap();
+		//auto texture_map = driver->GetTextureMap();
 		auto render_target = view->render_target();
 
-		GLuint fbo_id = frame_map[render_target.render_buffer_id];
-		GLuint tex_id = texture_map[render_target.texture_id];
+		//GLuint fbo_id = frame_map[render_target.render_buffer_id];
+		//GLuint tex_id = texture_map[render_target.texture_id];
 
 	    uint32_t tex_id2 = render_target.texture_id;
 
-		CopyTextureFromFBO(fbo_id, *textureForGPU);
-		textureForGPU->draw(offset.x, offset.y, textureForGPU->getWidth() , textureForGPU->getHeight() );
-		//ofLogNotice( "Size of Texture: " + ofToString( textureForGPU->getWidth() ) + "/" + ofToString( textureForGPU->getHeight() ) );
-		
-		//textureForGPU->bind();
-		//ofDrawRectangle(0,0,1000,500);
-		//textureForGPU->unbind();
+		gpu_driver->BindTexture(render_target.render_buffer_id, tex_id2);
+		Rect uv_coords = render_target.uv_coords;
 
+		
+		CopyTextureFromFBO(tex_id2, *textureForGPU);
+		textureForGPU->draw(offset.x - uv_coords.width() , offset.y - uv_coords.height(), textureForGPU->getWidth(), textureForGPU->getHeight() );
+
+		//ofLogNotice( "Size of Texture: " + ofToString( textureForGPU->getWidth() ) + "/" + ofToString( textureForGPU->getHeight() ) );		
+		//textureForGPU->bind();
+		//ofDrawRectangle(0,0,2000,1200);
+		//textureForGPU->unbind();
 
 		//ReadTextureToPBO(tex_id, pbo_id, mat_rgba);
 		//cv::cvtColor(mat_rgba, mat_bgr, cv::COLOR_RGBA2BGR);
-		//cv::imshow("mat_bgr", mat_bgr);
-		
+		//cv::imshow("mat_bgr", mat_bgr);		
 
 	}
 	else {
