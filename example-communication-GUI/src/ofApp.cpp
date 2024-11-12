@@ -24,8 +24,16 @@ void ofApp::setup(){
 
 }
 
+/* ToDo:
+##########################################################
+	Javascript-Stuff Direction Browser->OF
+	https://docs.ultralig.ht/docs/calling-a-c-function-from-js
+##########################################################
+*/
+
 // Definition
-void ofApp::buttonOne(const JSObject& obj, const JSArgs& args) {
+JSValueRef  ofApp::buttonOne(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+
 	// getting arguments passed on to bound JS Function
 	JSString str = args[0];
 	// covert the JS arguments to usable string
@@ -46,15 +54,23 @@ void ofApp::buttonTwo(const JSObject& obj, const JSArgs& args) {
 void ofApp::update() {
 	// wait till DOM is ready, then initialize once
 	// this is a bit of a hack, but enough for now
-	if (ul.DOMready && !JSinitialized) {
+	if (ul.isDomReady() && !JSinitialized) {
 		ofLogVerbose("## initializing JS");
-		JSObject global = JSGlobalObject();
 
-		// bind JS function "callOFButtonOne()" to ofApp function "buttonOne" here
-		global["callOFButtonOne"] = BindJSCallback(&ofApp::buttonOne);
-		// bind JS function "callOFSecondButton()" to ofApp function "buttonTwo" here
-		global["callOFSecondButton"] = BindJSCallback(&ofApp::buttonTwo);
-		JSinitialized = true;
+		// Create a JavaScript String containing the name of our callback.
+		JSStringRef name = JSStringCreateWithUTF8CString("buttonOne");
+
+		// Create a garbage-collected JavaScript function that is bound to our
+		// native C callback 'OnButtonClick()'.
+		JSObjectRef func = JSObjectMakeFunctionWithCallback(ul.getJSContext(), name, buttonOne);
+
+		// Get the global JavaScript object (aka 'window')
+		JSObjectRef globalObj = JSContextGetGlobalObject(ul.getJSContext());
+
+		// Store our function in the page's global JavaScript object so that it
+		// accessible from the page as 'OnButtonClick()'.
+		JSObjectSetProperty(ul.getJSContext(), globalObj, name, func, 0, 0);
+
 	}
 	// update ultralight
 	ul.update();

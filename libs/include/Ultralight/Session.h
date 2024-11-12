@@ -1,16 +1,10 @@
-///
-/// @file Session.h
-///
-/// @brief The header for the Session class.
-///
-/// @author
-///
-/// This file is a part of Ultralight, a fast, lightweight, HTML UI engine
-///
-/// Website: <http://ultralig.ht>
-///
-/// Copyright (C) 2020 Ultralight, Inc. All rights reserved.
-///
+/******************************************************************************
+ *  This file is a part of Ultralight, an ultra-portable web-browser engine.  *
+ *                                                                            *
+ *  See <https://ultralig.ht> for licensing and more.                         *
+ *                                                                            *
+ *  (C) 2023 Ultralight, Inc.                                                 *
+ *****************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>
 #include <Ultralight/RefPtr.h>
@@ -19,13 +13,12 @@
 namespace ultralight {
 
 ///
-/// @brief A Session stores local data such as cookies, local storage,
-///        and application cache for one or more Views. 
+/// Storage for browsing data (cookies, local storage, etc.) optionally persisted to disk.
 ///
-/// @see   Renderer::CreateSession
+/// @see  Renderer::CreateSession
 ///
 class UExport Session : public RefCounted {
-public:
+ public:
   ///
   /// Whether or not this session is written to disk.
   ///
@@ -46,8 +39,8 @@ public:
   ///
   virtual String disk_path() const = 0;
 
-protected:
+ protected:
   virtual ~Session();
 };
 
-}  // namespace ultralight
+} // namespace ultralight

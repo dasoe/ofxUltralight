@@ -26,7 +26,9 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 		bool JSinitialized;
-		void buttonOne(const JSObject& obj, const JSArgs& args);
+		JSValueRef  buttonOne(JSContextRef ctx, JSObjectRef function,
+			JSObjectRef thisObject, size_t argumentCount,
+			const JSValueRef arguments[], JSValueRef* exception);
 		void buttonTwo(const JSObject& obj, const JSArgs& args);
 		ofxUltralight ul;
 
