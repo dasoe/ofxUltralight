@@ -62,7 +62,7 @@ void ofxUltralight::load(string url) {
 	}
 
 	if (isURL) {
-		view->LoadURL(url.c_str());
+		view->LoadURL (url.c_str());
 	}
 	else {
 		ofLogVerbose("maybe it's still a File - try to load it");
@@ -115,19 +115,16 @@ JSContextRef ofxUltralight::getJSContext() {
 }
 
 //--------------------------------------------------------------
-void ofxUltralight::OnAddConsoleMessage(View* caller,
-	MessageSource source,
-	MessageLevel level,
-	const String& message,
-	uint32_t line_number,
-	uint32_t column_number,
-	const String& source_id) {
+void ofxUltralight::OnAddConsoleMessage(
+	View* caller,
+	const ConsoleMessage& message 
+) {
 	
 	// give out the console Message via OF Logging
-	auto getMessage = (string) Stringify(source);
-	ofLogNotice( "[Ultralight: Console]: [" + getMessage + "] [" + Stringify(level) + "] " + ToUTF8(message) );
-	if (source == kMessageSource_JS) {
-		ofLogNotice( " (" + ToUTF8(source_id) + " @ line " + ofToString(line_number) + ", col " + ofToString(column_number) + ")" );
+	auto getMessage = (string) Stringify( message.source() );
+	ofLogNotice( "[Ultralight: Console]: [" + getMessage + "] [" + Stringify( message.level() ) + "] " + ToUTF8( message.message() ) );
+	if ( message.source () == kMessageSource_JS) {
+		ofLogNotice( " (" + ToUTF8( message.source_id() ) + " @ line " + ofToString( message.line_number() ) + ", col " + ofToString( message.column_number() ) + ")" );
 	}
 	std::cout << std::endl;
 
@@ -140,19 +137,17 @@ void ofxUltralight::update() {
 
 //--------------------------------------------------------------
 void ofxUltralight::draw() {
+	renderer->RefreshDisplay ( 0 );
 	renderer->Render();
 
-	///
-	/// Cast it to a BitmapSurface.
-	///
-	BitmapSurface* bitmap_surface = (BitmapSurface*)(view->surface());
-	if ( !bitmap_surface->dirty_bounds().IsEmpty() && !view->is_loading() ) {
-		//ofLogVerbose("dirty, so draw");
+	// Get the Surface for the View (assuming CPU rendering)
+	Surface* surface = view->surface ();
 
-		///
-	/// Get the underlying bitmap.
-	///
-		RefPtr<Bitmap> bitmap = bitmap_surface->bitmap();
+	// Check if the Surface is dirty (pixels have changed)
+	if ( !surface->dirty_bounds ().IsEmpty () ) {
+		// Cast to the default Surface implementation (BitmapSurface) and get
+		// the underlying Bitmap.
+		RefPtr<Bitmap> bitmap = static_cast< BitmapSurface* >( surface )->bitmap ();
 
 		void* pixels = bitmap->LockPixels();
 
@@ -172,7 +167,7 @@ void ofxUltralight::draw() {
 		bitmap->UnlockPixels();
 
 		/// Clear the dirty bounds.
-		bitmap_surface->ClearDirtyBounds();
+		surface->ClearDirtyBounds ();
 		
 	}
 	oeTexture.draw(offset.x, offset.y);

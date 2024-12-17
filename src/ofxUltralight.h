@@ -52,13 +52,10 @@ public:
 		}
 	}
 
-	void OnAddConsoleMessage(View* caller,
-		MessageSource source,
-		MessageLevel level,
-		const String& message,
-		uint32_t line_number,
-		uint32_t column_number,
-		const String& source_id);
+	void OnAddConsoleMessage(
+		View* caller,
+		const ConsoleMessage& message 
+		);
 		virtual void OnDOMReady(ultralight::View* caller, uint64_t frame_id, bool is_main_frame,const String& url);
 		bool DOMready;
 

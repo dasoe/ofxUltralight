@@ -1,10 +1,10 @@
-/******************************************************************************
- *  This file is a part of Ultralight, an ultra-portable web-browser engine.  *
- *                                                                            *
- *  See <https://ultralig.ht> for licensing and more.                         *
- *                                                                            *
- *  (C) 2023 Ultralight, Inc.                                                 *
- *****************************************************************************/
+/**************************************************************************************************
+ *  This file is a part of Ultralight.                                                            *
+ *                                                                                                *
+ *  See <https://ultralig.ht> for licensing and more.                                             *
+ *                                                                                                *
+ *  (C) 2024 Ultralight, Inc.                                                                     *
+ **************************************************************************************************/
 #pragma once
 
 // Needed for limit defines, like INTMAX_MAX, which is used by the std C++ library
@@ -20,21 +20,23 @@
 #define UExport
 #else
 
+#include "Exports.h"
+
 // Require C++11 Support
 #if defined(_MSC_VER)
-#   if _MSC_VER < 1800 
-#       error This project needs at least Visual Studio 2013 to build
-#   endif
+#  if _MSC_VER < 1800 
+#    error This project needs at least Visual Studio 2013 to build
+#  endif
 #elif __cplusplus <= 199711L
-#   error This project can only be compiled with a compiler that supports C++11
+#  error This project can only be compiled with a compiler that supports C++11
 #endif
 
 #if INTPTR_MAX == INT32_MAX
-#define UL_ARCH_32_BIT
+#  define UL_ARCH_32_BIT
 #elif INTPTR_MAX == INT64_MAX
-#define UL_ARCH_64_BIT
+#  define UL_ARCH_64_BIT
 #else
-#error "Unknown CPU architecture: environment not 32 or 64-bit."
+#  error "Unknown CPU architecture: environment not 32 or 64-bit."
 #endif
 
 #if defined(__aarch64__)
@@ -45,41 +47,49 @@
 #endif
 
 #if defined(__WIN32__) || defined(_WIN32)
-#  if defined(ULTRALIGHT_STATIC_BUILD)
-#    define UExport 
-#  else
-#    if defined(ULTRALIGHT_IMPLEMENTATION)
-#      define UExport __declspec(dllexport)
-#    else
-#      define UExport __declspec(dllimport)
-#    endif
+#  define _thread_local __declspec(thread)
+#  ifndef _NATIVE_WCHAR_T_DEFINED
+#    define DISABLE_NATIVE_WCHAR_T
 #  endif
-#define _thread_local __declspec(thread)
-#ifndef _NATIVE_WCHAR_T_DEFINED
-#define DISABLE_NATIVE_WCHAR_T
-#endif
 #else
-#  if defined(ULTRALIGHT_STATIC_BUILD)
-#    define UExport 
+#  define _thread_local __thread
+#endif
+
+#ifndef UL_COMPILER_GCC_LIKE
+#  define UL_COMPILER_GCC_LIKE (defined(__clang__) || defined(__GNUC__) || defined(__GNUG__))
+#endif
+
+#ifndef UL_ALWAYS_INLINE
+#if defined(UL_COMPILER_GCC_LIKE) && defined(NDEBUG)
+#    define UL_ALWAYS_INLINE inline __attribute__((__always_inline__))
+#  elif defined(_MSC_VER) && defined(NDEBUG)
+#    define UL_ALWAYS_INLINE __forceinline
 #  else
-#    define UExport __attribute__((visibility("default")))
+#    define UL_ALWAYS_INLINE inline
 #  endif
-#define _thread_local __thread
+#endif
+
+#ifndef UL_UNLIKELY
+#  if defined(UL_COMPILER_GCC_LIKE)
+#    define UL_UNLIKELY(x) __builtin_expect(!!(x), 0)
+#  else
+#    define UL_UNLIKELY(x) (x)
+#  endif
 #endif
 
 #endif
 
-#define ULTRALIGHT_VERSION "1.3.0"
+#define ULTRALIGHT_VERSION "1.4.0"
 #define ULTRALIGHT_VERSION_MAJOR 1
-#define ULTRALIGHT_VERSION_MINOR 3
+#define ULTRALIGHT_VERSION_MINOR 4
 #define ULTRALIGHT_VERSION_PATCH 0
 
-#define WEBKIT_VERSION "610.4.3.1.4"
-#define WEBKIT_VERSION_MAJOR 610
-#define WEBKIT_VERSION_MINOR 4
-#define WEBKIT_VERSION_TINY 3
-#define WEBKIT_VERSION_MICRO 1
-#define WEBKIT_VERSION_NANO 4
+#define WEBKIT_VERSION "615.1.18.100.1"
+#define WEBKIT_VERSION_MAJOR 615
+#define WEBKIT_VERSION_MINOR 1
+#define WEBKIT_VERSION_TINY 18
+#define WEBKIT_VERSION_MICRO 100
+#define WEBKIT_VERSION_NANO 1
 
 #ifdef __cplusplus
 extern "C" {

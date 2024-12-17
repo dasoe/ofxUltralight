@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
@@ -29,20 +21,9 @@
     <RootNamespace>example-basic-CPU</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -52,30 +33,15 @@
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>bin\</OutDir>
-    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)_debug</TargetName>
-    <LinkIncremental>true</LinkIncremental>
-    <GenerateManifest>true</GenerateManifest>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>bin\</OutDir>
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
@@ -83,36 +49,11 @@
     <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>bin\</OutDir>
-    <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>bin\</OutDir>
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxUltralight\libs;..\..\..\addons\ofxUltralight\libs\include;..\..\..\addons\ofxUltralight\libs\include\AppCore;..\..\..\addons\ofxUltralight\libs\include\JavaScriptCore;..\..\..\addons\ofxUltralight\libs\include\Ultralight;..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform;..\..\..\addons\ofxUltralight\libs\include\Ultralight\private;..\..\..\addons\ofxUltralight\libs\lib;..\..\..\addons\ofxUltralight\libs\resources;..\..\..\addons\ofxUltralight\src</AdditionalIncludeDirectories>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
-    </ClCompile>
-    <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-    <PostBuildEvent />
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -120,40 +61,20 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxUltralight\libs;..\..\..\addons\ofxUltralight\libs\include;..\..\..\addons\ofxUltralight\libs\include\AppCore;..\..\..\addons\ofxUltralight\libs\include\JavaScriptCore;..\..\..\addons\ofxUltralight\libs\include\Ultralight;..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform;..\..\..\addons\ofxUltralight\libs\include\Ultralight\private;..\..\..\addons\ofxUltralight\libs\lib;..\..\..\addons\ofxUltralight\libs\resources;..\..\..\addons\ofxUltralight\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxUltralight\src;..\..\..\addons\ofxUltralight\libs;..\..\..\addons\ofxUltralight\libs\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)\Build\%(RelativeDir)\$(Configuration)\</ObjectFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-    <PostBuildEvent />
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxUltralight\libs;..\..\..\addons\ofxUltralight\libs\include;..\..\..\addons\ofxUltralight\libs\include\AppCore;..\..\..\addons\ofxUltralight\libs\include\JavaScriptCore;..\..\..\addons\ofxUltralight\libs\include\Ultralight;..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform;..\..\..\addons\ofxUltralight\libs\include\Ultralight\private;..\..\..\addons\ofxUltralight\libs\lib;..\..\..\addons\ofxUltralight\libs\resources;..\..\..\addons\ofxUltralight\src</AdditionalIncludeDirectories>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
-    </ClCompile>
-    <Link>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);AppCore.lib;Ultralight.lib;UltralightCore.lib;WebCore.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxUltralight\libs\lib\vs\x64</AdditionalLibraryDirectories>
+      <ForceFileOutput>MultiplyDefinedSymbolOnly</ForceFileOutput>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -163,9 +84,11 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxUltralight\libs;..\..\..\addons\ofxUltralight\libs\include;..\..\..\addons\ofxUltralight\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxUltralight\src;..\..\..\addons\ofxUltralight\libs;..\..\..\addons\ofxUltralight\libs\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ObjectFileName>$(IntDir)\Build\%(RelativeDir)\$(Configuration)\</ObjectFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -174,8 +97,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>UltralightCore.lib;Ultralight.lib;WebCore.lib;AppCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\addons\ofxUltralight\libs\lib\vs\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);AppCore.lib;Ultralight.lib;UltralightCore.lib;WebCore.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\addons\ofxUltralight\libs\lib\vs\x64</AdditionalLibraryDirectories>
+      <ForceFileOutput>MultiplyDefinedSymbolOnly</ForceFileOutput>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -191,6 +115,7 @@
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\AppCore.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\CAPI.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\Defines.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\Dialogs.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\JSHelpers.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\Monitor.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\Overlay.h" />
@@ -208,15 +133,44 @@
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\JavaScriptCore\WebKitAvailability.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Bitmap.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Buffer.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Bitmap.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Buffer.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Clipboard.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Config.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Defines.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_FileSystem.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_FontFile.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_FontLoader.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_GamepadEvent.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Geometry.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_GPUDriver.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_ImageSource.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_KeyEvent.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Logger.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_MouseEvent.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Platform.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Renderer.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_ScrollEvent.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Session.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_String.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Surface.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_View.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\ConsoleMessage.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Defines.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Exports.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\GamepadEvent.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Geometry.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\ImageSource.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\JavaScript.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\KeyCodes.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\KeyEvent.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Listener.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Lock.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Matrix.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\MouseEvent.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\NetworkRequest.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Allocator.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Clipboard.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Config.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\FileSystem.h" />
@@ -225,17 +179,17 @@
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Logger.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Platform.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Surface.h" />
-    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\private\PlatformFileSystem.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Thread.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\RefPtr.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Renderer.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\RenderTarget.h" />
-    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\RequestHandler.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\ScrollEvent.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Session.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\String.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\String16.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\String32.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\String8.h" />
+    <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\StringSTL.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Ultralight.h" />
     <ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\View.h" />
   </ItemGroup>
@@ -246,7 +200,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
     </ResourceCompile>

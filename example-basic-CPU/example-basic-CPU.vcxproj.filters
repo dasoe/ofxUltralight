@@ -7,6 +7,12 @@
 		<ClCompile Include="src\main.cpp">
 			<Filter>src</Filter>
 		</ClCompile>
+		<ClCompile Include="src\main.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\ofApp.cpp">
+			<Filter>src</Filter>
+		</ClCompile>
 		<ClCompile Include="..\..\..\addons\ofxUltralight\src\ofxUltralight.cpp">
 			<Filter>addons\ofxUltralight\src</Filter>
 		</ClCompile>
@@ -16,37 +22,40 @@
 			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons">
-			<UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
+			<UniqueIdentifier>{C3EBE567--0CD-6-49-B2-B-681-A7A36F748CE2}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUltralight">
-			<UniqueIdentifier>{12D3E393-A6F8-D08A-7BF1-81AC}</UniqueIdentifier>
+			<UniqueIdentifier>{70EFA869--B8E-2-43-7F-B-936-BC08C019CBBB}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUltralight\src">
-			<UniqueIdentifier>{69E3A393-B583-2283-7AF3-A377}</UniqueIdentifier>
+			<UniqueIdentifier>{FE1DDE56--64D-2-45-1F-8-5C5-5BA505F97AA9}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUltralight\libs">
-			<UniqueIdentifier>{26313E68-5B87-815B-6043-8523}</UniqueIdentifier>
+			<UniqueIdentifier>{A45674EA--320-D-42-D0-8-8EB-793FAFAD3DD3}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUltralight\libs\include">
-			<UniqueIdentifier>{EEC6D7C9-DA79-C59D-A614-59D1}</UniqueIdentifier>
+			<UniqueIdentifier>{0E89E58C--45B-B-45-27-9-C21-8567C10B7B9B}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUltralight\libs\include\AppCore">
-			<UniqueIdentifier>{CF06D5AF-E314-6A87-352A-00A7}</UniqueIdentifier>
+			<UniqueIdentifier>{691410E9--A9A-F-4E-42-8-348-83667A00E064}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUltralight\libs\include\JavaScriptCore">
-			<UniqueIdentifier>{010BB236-7A6B-C57F-F668-E592}</UniqueIdentifier>
+			<UniqueIdentifier>{C7ADAD67--4B6-4-4F-0B-B-E0A-B75C9DF86BB4}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUltralight\libs\include\Ultralight">
-			<UniqueIdentifier>{6A7B29CC-6ED1-5727-E082-36C5}</UniqueIdentifier>
+			<UniqueIdentifier>{AA1035D3--12D-1-42-73-8-50D-FAE7CACBFE16}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxUltralight\libs\include\Ultralight\CAPI">
+			<UniqueIdentifier>{6D05C614--EBA-6-4D-93-9-41D-FE2B9BE03D09}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxUltralight\libs\include\Ultralight\platform">
-			<UniqueIdentifier>{792EA1E1-9EEC-C627-2C18-E6E2}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxUltralight\libs\include\Ultralight\private">
-			<UniqueIdentifier>{4E44179F-1208-DA60-2D78-B9C3}</UniqueIdentifier>
+			<UniqueIdentifier>{AC81739B--5A2-B-4C-87-B-5CB-34B9F25AC35C}</UniqueIdentifier>
 		</Filter>
 	</ItemGroup>
 	<ItemGroup>
+		<ClInclude Include="src\ofApp.h">
+			<Filter>src</Filter>
+		</ClInclude>
 		<ClInclude Include="src\ofApp.h">
 			<Filter>src</Filter>
 		</ClInclude>
@@ -63,6 +72,9 @@
 			<Filter>addons\ofxUltralight\libs\include\AppCore</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\Defines.h">
+			<Filter>addons\ofxUltralight\libs\include\AppCore</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\Dialogs.h">
 			<Filter>addons\ofxUltralight\libs\include\AppCore</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\AppCore\JSHelpers.h">
@@ -116,13 +128,91 @@
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Buffer.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Bitmap.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Buffer.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Clipboard.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Config.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Defines.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_FileSystem.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_FontFile.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_FontLoader.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_GamepadEvent.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Geometry.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_GPUDriver.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_ImageSource.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_KeyEvent.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Logger.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_MouseEvent.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Platform.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Renderer.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_ScrollEvent.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Session.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_String.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_Surface.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI\CAPI_View.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\CAPI</Filter>
+		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\CAPI.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\ConsoleMessage.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Defines.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Exports.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\GamepadEvent.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
+		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Geometry.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\ImageSource.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\JavaScript.h">
@@ -137,11 +227,20 @@
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Listener.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Lock.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
+		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Matrix.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\MouseEvent.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\NetworkRequest.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Allocator.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\platform</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Clipboard.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight\platform</Filter>
@@ -167,8 +266,8 @@
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Surface.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight\platform</Filter>
 		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\private\PlatformFileSystem.h">
-			<Filter>addons\ofxUltralight\libs\include\Ultralight\private</Filter>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\platform\Thread.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight\platform</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\RefPtr.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
@@ -177,9 +276,6 @@
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\RenderTarget.h">
-			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\RequestHandler.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\ScrollEvent.h">
@@ -198,6 +294,9 @@
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\String8.h">
+			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\StringSTL.h">
 			<Filter>addons\ofxUltralight\libs\include\Ultralight</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\addons\ofxUltralight\libs\include\Ultralight\Ultralight.h">
