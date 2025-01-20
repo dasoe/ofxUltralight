@@ -26,9 +26,10 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 		bool JSinitialized;
-		void buttonOne(const JSObject& obj, const JSArgs& args);
-		void buttonTwo(const JSObject& obj, const JSArgs& args);
+		void buttonClicked ( const JSObject& obj, const JSArgs& args );
+		JSValue buttonTwo(const JSObject& obj, const JSArgs& args);
 		ofxUltralight ul;
+		int counter;
 
 		ofVec2f positionCircle, positionRectangle;
 		vector <ofColor> colors;

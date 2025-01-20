@@ -10,7 +10,9 @@ void ofApp::setup() {
 	// setup Ultralight. Params: int width, int height, [ofVec2f offset], string url/file
 	// url or file is distinguished automatically by checking the beginning of the string (http(s))
 
-	ul.setup(1400, 700, "https://de.wikipedia.org/wiki/Eisvogel");
+	//ul.setup(1400, 700, "https://de.wikipedia.org/wiki/Eisvogel");
+
+	ul.setup(1400, 700, "https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_video");
 	// ul.setup( 600, 400, "file.html" );
 }
 

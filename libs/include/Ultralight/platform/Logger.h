@@ -1,47 +1,42 @@
-///
-/// @file Logger.h
-///
-/// @brief The header for the Logger interface.
-///
-/// @author
-///
-/// This file is a part of Ultralight, a fast, lightweight, HTML UI engine
-///
-/// Website: <http://ultralig.ht>
-///
-/// Copyright (C) 2020 Ultralight, Inc. All rights reserved.
-///
+/******************************************************************************
+ *  This file is a part of Ultralight, an ultra-portable web-browser engine.  *
+ *                                                                            *
+ *  See <https://ultralig.ht> for licensing and more.                         *
+ *                                                                            *
+ *  (C) 2023 Ultralight, Inc.                                                 *
+ *****************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>
-#include <Ultralight/String16.h>
+#include <Ultralight/String.h>
 
 namespace ultralight {
 
 ///
 /// Log levels, used with Logger::LogMessage
 ///
-enum LogLevel {
-  kLogLevel_Error = 0,
-  kLogLevel_Warning,
-  kLogLevel_Info
+enum class LogLevel : uint8_t {
+  Error,
+  Warning,
+  Info
 };
 
 ///
-/// @brief  Logger interface.
+/// User-defined logging interface.
 ///          
-/// This can be used to log debug messages to the console or to a log file.
+/// The library uses this to display log messages for debugging during development.
 ///
-/// This is intended to be implemented by users and defined before creating the
-/// Renderer. @see Platform::set_file_system.
+/// This is intended to be implemented by users and defined before creating the Renderer. 
+/// 
+/// @see Platform::set_logger()
 ///
 class UExport Logger {
 public:
   virtual ~Logger();
 
   ///
-  /// Called when the library wants to print a message to the log.
+  /// Called when the library wants to display a log message.
   ///
-  virtual void LogMessage(LogLevel log_level, const String16& message) = 0;
+  virtual void LogMessage(LogLevel log_level, const String& message) = 0;
 };
 
 }  // namespace ultralight

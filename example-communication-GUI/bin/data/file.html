@@ -5,7 +5,11 @@
     <script>
         let turn = false;
         function callOFButtonOne(num) { }
-        function callOFSecondButton() { }
+        function doCallToGetSomething(evt) {
+              // Call our C++ callback 'GetMessage'
+            var message = callOFSecondButton();
+            document.getElementById("returnValue").innerHTML = message;
+         }
         function receiveFromOF(content) {
             let el = document.getElementById("contentToAdd");
             el.innerHTML += content;
@@ -33,13 +37,16 @@
     </div>
     <div>
         <button onclick="callOFButtonOne('Persistence is king!');">Button 1</button>
-        <button onclick="callOFSecondButton();">Button 2</button>
+        <button onclick="doCallToGetSomething(event)">Button 2</button>
     </div>
     <br />
     <div id="contentToAdd">
         The other way works too. Click the Button in the openFrameworks App to add some Color (and Content below).
         <br /><br />
-
+    </div>
+    <br /><br />
+    <div id="returnValue">
+        Placeholder
     </div>
 </body>
 </html>

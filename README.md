@@ -1,10 +1,11 @@
 
-[openframeworks](https://openframeworks.cc/) 0.11.0 addon for ultralight-sdk-1.2-win https://ultralig.ht/
+[openframeworks](https://openframeworks.cc/) 0.11.0 addon for ultralight-sdk-1.3-win https://ultralig.ht/
 Ultralight (c) 2018 Ultralight, Inc. Ultralight is a trademark of Ultralight, Inc.
 
 ### About
 
-With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/), implementation of Ultralight in other Apps has become *much* easier. So I wrote this addon from scratch. This is only a beginning and at the moment mostly for my usecase:
+With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/), implementation of Ultralight in other Apps has become *much* easier. So I wrote this addon from scratch. **In the meantime, we are using Ultralight 1.3**
+This is only a beginning and at the moment mostly for my usecase:
 * Heavily layouted One-Page content, that can be changed easily without having to adjust my OF App
 * Simple GUI functionality (communication with the OF App, which has the power to do the advanced stuff)
 
@@ -18,7 +19,7 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 * Mouse klick and scroll wheel implementation.
 * Basic keyboard implementation.
 * High-level (easy to understand and use) code in your App.
-* Communication OF->Ultralight and Ultralight->OF.
+* Communication OF->Ultralight (JS), Ultralight(JS)->OF and Ultralight(JS)->OF-> Ultralight(JS).
 * UL log goes to Terminal via OF Logging, same for Console Messages.
 * Only windows for now. I will definetely do a Linux Version, though.
 * *example-basic-CPU* shows how to use in general.

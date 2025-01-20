@@ -1,3 +1,10 @@
+/******************************************************************************
+ *  This file is a part of Ultralight, an ultra-portable web-browser engine.  *
+ *                                                                            *
+ *  See <https://ultralig.ht> for licensing and more.                         *
+ *                                                                            *
+ *  (C) 2023 Ultralight, Inc.                                                 *
+ *****************************************************************************/
 #pragma once
 #include <AppCore/Defines.h>
 #include <JavaScriptCore/JavaScript.h>
@@ -40,16 +47,16 @@ public:
   /// Create from Ultralight String
   JSString(const String& str);
 
-  /// Take ownership of existing JSStringRef (will not increase ref-count)
+  /// Create from existing JSStringRef
   JSString(JSStringRef str);
 
-  /// Copy constructor (will increase ref-count)
+  /// Copy constructor 
   JSString(const JSString& other);
 
   /// Destructor
   ~JSString();
 
-  /// Assignment operator (will increase ref-count)
+  /// Assignment operator 
   JSString& operator=(const JSString& other);
 
   /// Cast to String

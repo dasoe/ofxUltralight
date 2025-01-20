@@ -1,4 +1,10 @@
-// Copyright 2018 Ultralight, Inc. All rights reserved.
+/******************************************************************************
+ *  This file is a part of Ultralight, an ultra-portable web-browser engine.  *
+ *                                                                            *
+ *  See <https://ultralig.ht> for licensing and more.                         *
+ *                                                                            *
+ *  (C) 2023 Ultralight, Inc.                                                 *
+ *****************************************************************************/
 #pragma once
 
 // Needed for limit defines, like INTMAX_MAX, which is used by the std C++ library
@@ -23,20 +29,27 @@
 #   error This project can only be compiled with a compiler that supports C++11
 #endif
 
+#if defined(ULTRALIGHT_STATIC_BUILD)
+#  define AExport 
+#else
+#  if defined(__WIN32__) || defined(_WIN32)
+#    if defined(APPCORE_IMPLEMENTATION)
+#      define AExport __declspec(dllexport)
+#    else
+#      define AExport __declspec(dllimport)
+#    endif
+#  else
+#    define AExport __attribute__((visibility("default")))
+#  endif
+#endif
 
 #if defined(__WIN32__) || defined(_WIN32)
-#  if defined(APPCORE_IMPLEMENTATION)
-#    define AExport __declspec(dllexport)
-#  else
-#    define AExport __declspec(dllimport)
+#  define _thread_local __declspec(thread)
+#  ifndef _NATIVE_WCHAR_T_DEFINED
+#    define DISABLE_NATIVE_WCHAR_T
 #  endif
-#define _thread_local __declspec(thread)
-#ifndef _NATIVE_WCHAR_T_DEFINED
-#define DISABLE_NATIVE_WCHAR_T
-#endif
 #else
-#  define AExport __attribute__((visibility("default")))
-#define _thread_local __thread
+#  define _thread_local __thread
 #endif
 
 #endif

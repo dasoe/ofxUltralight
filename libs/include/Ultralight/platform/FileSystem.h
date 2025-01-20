@@ -1,93 +1,104 @@
-///
-/// @file FileSystem.h
-///
-/// @brief The header for the FileSystem interface.
-///
-/// @author
-///
-/// This file is a part of Ultralight, a fast, lightweight, HTML UI engine
-///
-/// Website: <http://ultralig.ht>
-///
-/// Copyright (C) 2020 Ultralight, Inc. All rights reserved.
-///
+/******************************************************************************
+ *  This file is a part of Ultralight, an ultra-portable web-browser engine.  *
+ *                                                                            *
+ *  See <https://ultralig.ht> for licensing and more.                         *
+ *                                                                            *
+ *  (C) 2023 Ultralight, Inc.                                                 *
+ *****************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>
-#include <Ultralight/String16.h>
+#include <Ultralight/String.h>
+#include <Ultralight/Buffer.h>
 
 namespace ultralight {
 
 ///
-/// File Handle type used as unique ID for opened files.
+/// User-defined file system interface.
 ///
-#if defined(__WIN32__) || defined(_WIN32)
-typedef size_t FileHandle;
-#else
-typedef int FileHandle;
-#endif
-
+/// The library uses this to load all file URLs (eg, <file:///page.html>).
 ///
-/// Handle used to denote an invalid file.
+/// You can provide the library with your own FileSystem implementation so that file assets are
+/// loaded from your own pipeline.
+/// 
+/// ## Usage
 ///
-const FileHandle invalidFileHandle = (FileHandle)-1;
-
+/// To provide your own custom FileSystem implementation, you should inherit from this class,
+/// handle the virtual member functions, and then pass an instance of your class to
+/// Platform::set_file_system() before calling Renderer::Create() or App::Create().
+/// 
+/// @note
+/// \parblock
+/// AppCore uses a default OS-specific FileSystem implementation when you call App::Create().
 ///
-/// @brief  FileSystem interface.
-///          
-/// This is used for loading File URLs (eg, <file:///page.html>).
-///
-/// You can provide the library with your own FileSystem implementation so that
-/// file assets are loaded from your own pipeline (useful if you would like
-/// to encrypt/compress your file assets or ship it in a custom format).
-///
-/// AppCore automatically provides a platform-specific implementation of this
-/// that loads files from a local directory when you call App::Create().
-///
-/// If you are using Renderer::Create() instead, you will need to provide your
-/// own implementation via `Platform::instance().set_file_system(). For
-/// convenience, you can still use AppCore's file system implementation--
-/// see the helper functions defined in <AppCore/Platform.h>.
-///
-/// To provide your own custom FileSystem implementation, you should inherit
-/// from this class, handle the virtual member functions, and then pass an
-/// instance of your class to `Platform::instance().set_file_system()` before
-/// calling Renderer::Create() or App::Create().
+/// If you are using Renderer::Create(), you can still use AppCore's implementation-- see the
+/// helper functions defined in <AppCore/Platform.h>.
+/// \endparblock
 ///
 class UExport FileSystem {
-public:
+ public:
   virtual ~FileSystem();
 
   ///
-  /// Check if file path exists, return true if exists.
+  /// Check if a file exists within the file system.
+  /// 
+  /// @param  file_path  Relative file path (the string following the file:/// prefix)
+  /// 
+  /// @return Returns whether or not a file exists at the path specified.
   ///
-  virtual bool FileExists(const String16& path) = 0;
+  virtual bool FileExists(const String& file_path) = 0;
 
   ///
-  /// Get file size of previously opened file, store result in 'result'. Return true on success.
+  /// Get the mime-type of a file (eg "text/html").
+  /// 
+  /// This is usually determined by analyzing the file extension.
+  /// 
+  /// If a mime-type cannot be determined, this should return "application/unknown".
+  /// 
+  /// @param  file_path  Relative file path (the string following the file:/// prefix)
   ///
-  virtual bool GetFileSize(FileHandle handle, int64_t& result) = 0;
+  /// @return Returns whether or not a file exists at the path specified.
+  ///
+  virtual String GetFileMimeType(const String& file_path) = 0;
 
   ///
-  /// Get file mime type (eg "text/html"), store result in 'result'. Return true on success.
+  /// Get the charset / encoding of a file (eg "utf-8", "iso-8859-1").
+  /// 
+  /// @note This is only applicable for text-based files (eg, "text/html", "text/plain") and is
+  ///       usually determined by analyzing the contents of the file.
+  /// 
+  /// @param  file_path  Relative file path (the string following the file:/// prefix)
   ///
-  virtual bool GetFileMimeType(const String16& path, String16& result) = 0;
+  /// @return Returns the charset of the specified file. If a charset cannot be determined, a safe
+  ///         default to return is "utf-8".
+  /// 
+  virtual String GetFileCharset(const String& file_path) = 0;
 
   ///
-  /// Open file path for reading or writing. Return file handle on success, or invalidFileHandle on failure.
+  /// Open a file for reading and map it to a Buffer.
+  /// 
+  /// To minimize copies, you should map the requested file into memory and use Buffer::Create()
+  /// to wrap the data pointer (unmapping should be performed in the destruction callback).
   ///
-  /// @NOTE:  As of this writing (v1.2), this function is only used for reading.
-  ///
-  virtual FileHandle OpenFile(const String16& path, bool open_for_writing) = 0;
-
-  ///
-  /// Close previously-opened file.
-  ///
-  virtual void CloseFile(FileHandle& handle) = 0;
-
-  ///
-  /// Read from currently-opened file, return number of bytes read or -1 on failure.
-  ///
-  virtual int64_t ReadFromFile(FileHandle handle, char* data, int64_t length) = 0;
+  /// @note  
+  /// \parblock
+  /// File data addresses returned from this function should generally be aligned to 16-byte
+  /// boundaries (the default alignment on most operating systems-- if you're using C stdlib or
+  /// C++ STL functions this is already handled for you).
+  /// 
+  /// This requirement is currently necessary when loading the ICU data file (eg, icudt67l.dat),
+  /// and may be relaxed for  other files (but you may still see a performance benefit due to cache
+  /// line alignment).
+  /// 
+  /// If you can't guarantee alignment or are unsure, you can use Buffer::CreateFromCopy to copy
+  /// the file data content to an aligned block (at the expense of data duplication).
+  /// \endparblock
+  /// 
+  /// @param  file_path  Relative file path (the string following the file:/// prefix)
+  /// 
+  /// @return If the file was able to be opened, this returns a Buffer object representing the
+  ///         contents of the file. If the file was unable to be opened, you should return nullptr.
+  /// 
+  virtual RefPtr<Buffer> OpenFile(const String& file_path) = 0;
 };
 
-}  // namespace ultralight
+} // namespace ultralight

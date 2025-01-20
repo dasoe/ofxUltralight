@@ -1,230 +1,246 @@
-///
-/// @file Config.h
-///
-/// @brief The header for the Config struct.
-///
-/// @author
-///
-/// This file is a part of Ultralight, a fast, lightweight, HTML UI engine
-///
-/// Website: <http://ultralig.ht>
-///
-/// Copyright (C) 2020 Ultralight, Inc. All rights reserved.
-///
+/******************************************************************************
+ *  This file is a part of Ultralight, an ultra-portable web-browser engine.  *
+ *                                                                            *
+ *  See <https://ultralig.ht> for licensing and more.                         *
+ *                                                                            *
+ *  (C) 2023 Ultralight, Inc.                                                 *
+ *****************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>
-#include <Ultralight/String16.h>
+#include <Ultralight/String.h>
 
 namespace ultralight {
 
 ///
-/// The winding order for front-facing triangles. (This is only used when the
-/// GPU renderer is enabled)
+/// The winding order for front-facing triangles. (Only used when the GPU renderer is used)
 ///
-/// @note  In most 3D engines, there is the concept that triangles have a
-///        a "front" and a "back". All the front-facing triangles (eg, those
-///        that are facing the camera) are rendered, and all back-facing
-///        triangles are culled (ignored). The winding-order of the triangle's
-///        vertices is used to determine which side is front and back. You
-///        should tell Ultralight which winding-order your 3D engine uses.
-///
-enum FaceWinding {
+enum class UExport FaceWinding : uint8_t {
   ///
   /// Clockwise Winding (Direct3D, etc.)
   ///
-  kFaceWinding_Clockwise,
+  Clockwise,
 
   ///
   /// Counter-Clockwise Winding (OpenGL, etc.)
   ///
-  kFaceWinding_CounterClockwise,
+  CounterClockwise,
 };
 
-enum FontHinting {
+enum class UExport FontHinting : uint8_t {
   ///
-  /// Lighter hinting algorithm-- glyphs are slightly fuzzier but better
-  /// resemble their original shape. This is achieved by snapping glyphs to the
-  /// pixel grid only vertically which better preserves inter-glyph spacing.
+  /// Lighter hinting algorithm-- glyphs are slightly fuzzier but better resemble their original
+  /// shape. This is achieved by snapping glyphs to the pixel grid only vertically which better
+  /// preserves inter-glyph spacing.
   ///
-  kFontHinting_Smooth,
+  Smooth,
 
   ///
-  /// Default hinting algorithm-- offers a good balance between sharpness and
-  /// shape at smaller font sizes.
+  /// Default hinting algorithm-- offers a good balance between sharpness and shape at smaller font
+  /// sizes.
   ///
-  kFontHinting_Normal,
+  Normal,
 
   ///
-  /// Strongest hinting algorithm-- outputs only black/white glyphs. The result
-  /// is usually unpleasant if the underlying TTF does not contain hints for
-  /// this type of rendering.
+  /// Strongest hinting algorithm-- outputs only black/white glyphs. The result is usually
+  /// unpleasant if the underlying TTF does not contain hints for this type of rendering.
   ///
-  kFontHinting_Monochrome,
+  Monochrome,
+
+  ///
+  /// No hinting is performed-- fonts may be blurry at smaller font sizes.
+  ///
+  None,
 };
 
 ///
-/// @brief  Configuration settings for Ultralight.         
+/// Global config for Ultralight.
 ///
-/// This is intended to be implemented by users and defined before creating the
-/// Renderer. @see Platform::set_config.
+/// This can be used to configure the library by calling Platform::set_config() before creating the
+/// Renderer or App singletons.
+/// 
+/// @par Example usage
+/// ```
+///   Config config;
+///   config.user_stylesheet = "body { background: purple; }";
+/// 
+///   Platform::instance().set_config(config);
+///   // (Setup other Platform interfaces here.)
+/// 
+///   auto renderer = Renderer::Create();
+/// ```
 ///
 struct UExport Config {
   ///
-  /// The file path to the directory that contains Ultralight's bundled
-  /// resources (eg, cacert.pem and other localized resources). 
+  /// A writable OS file path to store persistent Session data in.
+  /// 
+  /// This data may include cookies, cached network resources, indexed DB, etc.
+  /// 
+  /// @note Files are only written to the path when using a persistent Session.
+  /// 
+  /// @see Renderer::CreateSession()
   ///
-  String16 resource_path;
+  String cache_path;
 
   ///
-  /// The file path to a writable directory that will be used to store cookies,
-  /// cached resources, and other persistent data.
+  /// The relative path to the resources folder (loaded via the FileSystem API).
+  /// 
+  /// The library loads certain resources (SSL certs, ICU data, etc.) from the FileSystem API
+  /// during runtime (eg, `file:///resources/cacert.pem`).
+  /// 
+  /// You can customize the relative file path to the resources folder by modifying this setting.
+  /// 
+  /// @see FileSystem
   ///
-  String16 cache_path;
+  String resource_path_prefix = "resources/";
 
   ///
-  /// When enabled, each View will be rendered to an offscreen GPU texture
-  /// using the GPU driver set in Platform::set_gpu_driver. You can fetch
-  /// details for the texture via View::render_target.
+  /// The winding order for front-facing triangles.
   ///
-  /// When disabled (the default), each View will be rendered to an offscreen
-  /// pixel buffer. This pixel buffer can optionally be provided by the user--
-  /// for more info see <Ultralight/platform/Surface.h> and View::surface.
+  /// @pre Only used when GPU rendering is enabled for the View.
   ///
-  bool use_gpu_renderer = false;
+  /// @see FaceWinding
+  ///
+  FaceWinding face_winding = FaceWinding::CounterClockwise;
 
   ///
-  /// The amount that the application DPI has been scaled (200% = 2.0).
-  /// This should match the device scale set for the current monitor.
+  /// The hinting algorithm to use when rendering fonts.
+  /// 
+  /// @see FontHinting
   ///
-  /// Note: Device scales are rounded to nearest 1/8th (eg, 0.125).
-  ///
-  double device_scale = 1.0;
+  FontHinting font_hinting = FontHinting::Normal;
 
   ///
-  /// The winding order for front-facing triangles. @see FaceWinding
-  ///
-  /// Note: This is only used when the GPU renderer is enabled.
-  ///
-  FaceWinding face_winding = kFaceWinding_CounterClockwise;
-
-  ///
-  /// Whether or not images should be enabled.
-  ///
-  bool enable_images = true;
-
-  ///
-  /// Whether or not JavaScript should be enabled.
-  ///
-  bool enable_javascript = true;
-
-  ///
-  /// The hinting algorithm to use when rendering fonts. @see FontHinting
-  ///
-  FontHinting font_hinting = kFontHinting_Normal;
-
-  ///
-  /// The gamma to use when compositing font glyphs, change this value to
-  /// adjust contrast (Adobe and Apple prefer 1.8, others may prefer 2.2).
+  /// The gamma to use when compositing font glyphs.
+  /// 
+  /// You can change this value to adjust font contrast (Adobe and Apple prefer 1.8).
   ///
   double font_gamma = 1.8;
 
   ///
-  /// Default font-family to use.
+  /// Global user-defined CSS string (included before any CSS on the page).
+  /// 
+  /// You can use this to override default styles for various elements on the page.
+  /// 
+  /// @note This is an actual string of CSS, not a file path.
   ///
-  String16 font_family_standard = "Times New Roman";
+  String user_stylesheet;
 
   ///
-  /// Default font-family to use for fixed fonts. (pre/code)
-  ///
-  String16 font_family_fixed = "Courier New";
-
-  ///
-  /// Default font-family to use for serif fonts.
-  ///
-  String16 font_family_serif = "Times New Roman";
-
-  ///
-  /// Default font-family to use for sans-serif fonts.
-  ///
-  String16 font_family_sans_serif = "Arial";
-
-  ///
-  /// Default user-agent string.
-  ///
-  String16 user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                          "AppleWebKit/608.3.10 (KHTML, like Gecko) "
-                          "Ultralight/1.2.0 Safari/608.3.10";
-
-  ///
-  /// Default user stylesheet. You should set this to your own custom CSS
-  /// string to define default styles for various DOM elements, scrollbars,
-  /// and platform input widgets.
-  ///
-  String16 user_stylesheet;
-
-  ///
-  /// Whether or not we should continuously repaint any Views or compositor
-  /// layers, regardless if they are dirty or not. This is mainly used to
-  /// diagnose painting/shader issues.
+  /// Whether or not to continuously repaint any Views, regardless if they are dirty.
+  /// 
+  /// This is mainly used to diagnose painting/shader issues and profile performance.
   ///
   bool force_repaint = false;
 
   ///
-  /// When a CSS animation is active, the amount of time (in seconds) to wait
-  /// before triggering another repaint. Default is 60 Hz.
+  /// The delay (in seconds) between every tick of a CSS animation. (Default: 60 FPS)
   ///
   double animation_timer_delay = 1.0 / 60.0;
 
   ///
-  /// When a smooth scroll animation is active, the amount of time (in seconds)
-  /// to wait before triggering another repaint. Default is 60 Hz.
+  /// The delay (in seconds) between every tick of a smooth scroll animation. (Default: 60 FPS)
   ///
   double scroll_timer_delay = 1.0 / 60.0;
 
   ///
-  /// The amount of time (in seconds) to wait before running the recycler (will
-  /// attempt to return excess memory back to the system).
+  /// The delay (in seconds) between every call to the recycler.
+  /// 
+  /// The library attempts to reclaim excess memory during calls to the internal recycler. You can
+  /// change how often this is run by modifying this value.
   ///
   double recycle_delay = 4.0;
 
   ///
-  /// Size of WebCore's memory cache in bytes. 
+  /// The size of WebCore's memory cache in bytes.
   ///
-  /// @note  You should increase this if you anticipate handling pages with
-  ///        large resources, Safari typically uses 128+ MiB for its cache.
+  /// @note  You should increase this if you anticipate handling pages with large resources, Safari
+  ///        typically uses 128+ MiB for its cache.
   ///
   uint32_t memory_cache_size = 64 * 1024 * 1024;
 
   ///
-  /// Number of pages to keep in the cache. Defaults to 0 (none).
+  /// The number of pages to keep in the cache. (Default: 0, none)
   ///
-  /// @note  Safari typically caches about 5 pages and maintains an on-disk
-  ///        cache to support typical web-browsing activities. If you increase
-  ///        this, you should probably increase the memory cache size as well.
+  /// @note
+  /// \parblock
+  /// 
+  /// Safari typically caches about 5 pages and maintains an on-disk cache to support typical
+  /// web-browsing activities.
+  /// 
+  /// If you increase this, you should probably increase the memory cache size as well.
+  /// 
+  /// \endparblock
   ///
   uint32_t page_cache_size = 0;
 
   ///
-  /// JavaScriptCore tries to detect the system's physical RAM size to set
-  /// reasonable allocation limits. Set this to anything other than 0 to
-  /// override the detected value. Size is in bytes.
+  /// The system's physical RAM size in bytes.
+  /// 
+  /// JavaScriptCore tries to detect the system's physical RAM size to set reasonable allocation
+  /// limits. Set this to anything other than 0 to override the detected value. Size is in bytes.
   ///
-  /// This can be used to force JavaScriptCore to be more conservative with
-  /// its allocation strategy (at the cost of some performance).
+  /// This can be used to force JavaScriptCore to be more conservative with its allocation strategy
+  /// (at the cost of some performance).
   ///
   uint32_t override_ram_size = 0;
 
   ///
-  /// The minimum size of large VM heaps in JavaScriptCore. Set this to a
-  /// lower value to make these heaps start with a smaller initial value.
+  /// The minimum size of large VM heaps in JavaScriptCore.
+  /// 
+  /// Set this to a lower value to make these heaps start with a smaller initial value.
   ///
   uint32_t min_large_heap_size = 32 * 1024 * 1024;
 
   ///
-  /// The minimum size of small VM heaps in JavaScriptCore. Set this to a
-  /// lower value to make these heaps start with a smaller initial value.
+  /// The minimum size of small VM heaps in JavaScriptCore.
+  /// 
+  /// Set this to a lower value to make these heaps start with a smaller initial value.
   ///
   uint32_t min_small_heap_size = 1 * 1024 * 1024;
+
+  ///
+  /// The number of threads to use in the Renderer (for parallel painting on the CPU, etc.).
+  /// 
+  /// You can set this to a certain number to limit the number of threads to spawn.
+  /// 
+  /// @note
+  /// \parblock
+  /// 
+  /// If this value is 0, the number of threads will be determined at runtime using the following
+  /// formula: 
+  /// 
+  ///   ```
+  ///   max(PhysicalProcessorCount() - 1, 1)
+  ///   ```
+  /// 
+  /// \endparblock
+  /// 
+  uint32_t num_renderer_threads = 0;
+
+  /// 
+  /// The max amount of time (in seconds) to allow repeating timers to run during each call to
+  /// Renderer::Update.
+  /// 
+  /// The library will attempt to throttle timers if this time budget is exceeded.
+  ///
+  double max_update_time = 1.0 / 200.0;
+
+  ///
+  /// The alignment (in bytes) of the BitmapSurface when using the CPU renderer.
+  ///
+  /// The underlying bitmap associated with each BitmapSurface will have row_bytes padded to reach
+  /// this alignment.
+  ///
+  /// Aligning the bitmap helps improve performance when using the CPU renderer. Determining the
+  /// proper value to use depends on the CPU architecture and max SIMD instruction set used.
+  ///
+  /// We generally target the 128-bit SSE2 instruction set across most PC platforms so '16' is
+  /// a safe value to use.
+  ///
+  /// You can set this to '0' to perform no padding (row_bytes will always be width * 4) at a
+  /// slight cost to performance.
+  ///
+  uint32_t bitmap_alignment = 16;
 };
 
-}  // namespace ultralight
+} // namespace ultralight

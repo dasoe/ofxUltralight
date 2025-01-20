@@ -1,21 +1,18 @@
-///
-/// @file String32.h
-///
-/// @brief The header for the String32 class.
-///
-/// @author
-///
-/// This file is a part of Ultralight, a fast, lightweight, HTML UI engine
-///
-/// Website: <http://ultralig.ht>
-///
-/// Copyright (C) 2020 Ultralight, Inc. All rights reserved.
-///
+/******************************************************************************
+ *  This file is a part of Ultralight, an ultra-portable web-browser engine.  *
+ *                                                                            *
+ *  See <https://ultralig.ht> for licensing and more.                         *
+ *                                                                            *
+ *  (C) 2023 Ultralight, Inc.                                                 *
+ *****************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>
 #include <stddef.h>
 
 namespace ultralight {
+
+class String8;
+class String16;
 
 ///
 /// @brief  A UTF-32 string container.
@@ -54,6 +51,9 @@ public:
   // Get size in characters (synonym for length)
   size_t size() const { return length_; }
 
+  // Get size in bytes
+  size_t sizeBytes() const { return length_ * sizeof(char32_t); }
+
   // Check if string is empty.
   bool empty() const { return !data_ || length_ == 0; }
 
@@ -62,6 +62,12 @@ public:
 
   // Get character at specific position (const)
   const char32_t& operator[](size_t pos) const { return data_[pos]; }
+
+  // Get a UTF-8 copy of this string
+  String8 utf8() const;
+  
+  // Get a UTF-16 copy of this string
+  String16 utf16() const;
 
 private:
   char32_t* data_;

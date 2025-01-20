@@ -5,27 +5,34 @@ void ofxUltralight::setup(int width, int height, string url) {
 	setup(width, height, ofVec2f(0, 0), url);
 	DOMready = false;
 }
-
-void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
+void ofxUltralight::setup ( int width, int height, ofVec2f t_offset, string url ) {
+	setup ( width, height, t_offset, url, false );
+}
+void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url, bool _transparent) {
 	//ofLogNotice(ofToDataPath("resources").c_str());
 	offset = t_offset;
+	Config config;
 
-	config.resource_path = "../../../../addons/ofxUltralight/libs/resources";
-	config.use_gpu_renderer = false;
-	config.device_scale = 1.0;
-	config.user_agent = "Mozilla/5.0 (Linux; Android 8.1.0; SM-G965F Build/OPM2.171019.029) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/7.2 Chrome/59.0.3071.125 Mobile Safari/537.36";
+	//config.resource_path_prefix = "../../../../addons/ofxUltralight/libs/resources/";
 
 	auto& platform = Platform::instance();
-	platform.set_font_loader(GetPlatformFontLoader());
 	platform.set_config(config);
-	platform.set_logger(new MyLogger());
+	platform.set_font_loader(GetPlatformFontLoader());
+	platform.set_logger(GetDefaultLogger("ultralight.log"));
 	platform.set_file_system(GetPlatformFileSystem("data"));
 
 	//gpu_driver = make_shared<GPUDriverGL>(1);
 	//platform.set_gpu_driver(gpu_driver.get());
 
 	renderer = Renderer::Create();
-	view = renderer->CreateView(width, height, false, nullptr);
+
+	ViewConfig view_config;
+	view_config.is_accelerated = false;
+	view_config.is_transparent = _transparent;
+	view_config.initial_device_scale = 1.0;
+
+
+	view = renderer->CreateView(width, height, view_config, nullptr);
 	ofLogVerbose("given string is '" + url + "'");
 	
 	//inspectorView = view->inspector();
@@ -86,8 +93,28 @@ void ofxUltralight::OnDOMReady(ultralight::View* caller, uint64_t frame_id, bool
 	ofLogVerbose( "Ultralight DOM ready" );
 	DOMready = true;
 
-	Ref<JSContext> locked_context = caller->LockJSContext();
-	SetJSContext(locked_context.get());
+	///
+	/// Acquire the JS execution context for the current page.
+	///
+	auto scoped_context = caller->LockJSContext();
+
+	///
+	/// Typecast to the underlying JSContextRef.
+	///
+	jsContext = (*scoped_context);
+}
+
+bool ofxUltralight::isDomReady() {
+	return DOMready;
+}
+
+JSContextRef ofxUltralight::getJSContext() {
+	if (DOMready) {
+		return jsContext;
+	}
+	else {
+		return NULL;
+	}
 }
 
 //--------------------------------------------------------------
@@ -326,4 +353,7 @@ string ofxUltralight::getStringFromJSstr(JSString str) {
 	JSStringGetUTF8CString(str, buffer, length);
 	
 	return (string)buffer;
+}
+//--------------------------------------------------------------
+void ofxUltralight::exit() {
 }

@@ -1,22 +1,19 @@
-///
-/// @file String16.h
-///
-/// @brief The header for the String16 class.
-///
-/// @author
-///
-/// This file is a part of Ultralight, a fast, lightweight, HTML UI engine
-///
-/// Website: <http://ultralig.ht>
-///
-/// Copyright (C) 2020 Ultralight, Inc. All rights reserved.
-///
+/******************************************************************************
+ *  This file is a part of Ultralight, an ultra-portable web-browser engine.  *
+ *                                                                            *
+ *  See <https://ultralig.ht> for licensing and more.                         *
+ *                                                                            *
+ *  (C) 2023 Ultralight, Inc.                                                 *
+ *****************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>
 #include <Ultralight/RefPtr.h>
 #include <stddef.h>
 
 namespace ultralight {
+
+class String8;
+class String32;
 
 namespace detail {
   template<int> struct selector;
@@ -39,12 +36,6 @@ class UExport String16 {
 public:
   // Make an empty String16
   String16();
-
-  // Make a String16 from null-terminated ASCII C-string
-  String16(const char* c_str);
-
-  // Make a String16 from ASCII C-string with certain length
-  String16(const char* c_str, size_t len);
 
   // Make a String16 from raw UTF-16 buffer with certain length
   String16(const Char16* str, size_t len);
@@ -86,6 +77,9 @@ public:
   // Get size in characters (synonym for length)
   size_t size() const { return length_; }
 
+  // Get size in bytes
+  size_t sizeBytes() const { return length_ * sizeof(Char16); }
+
   // Check if string is empty.
   bool empty() const { return !data_ || length_ == 0; }
 
@@ -94,6 +88,12 @@ public:
 
   // Get character at specific position (const)
   const Char16& operator[](size_t pos) const { return data_[pos]; }
+
+  // Get a UTF-8 copy of this string
+  String8 utf8() const;
+
+  // Get a UTF-32 copy of this string
+  String32 utf32() const;
 
 private:
   Char16* data_;
@@ -106,10 +106,10 @@ private:
 class UExport String16Vector : public RefCounted {
 public:
   // Create an empty string vector
-  static Ref<String16Vector> Create();
+  static RefPtr<String16Vector> Create();
 
   // Create a string vector from an existing array (a deep copy is made)
-  static Ref<String16Vector> Create(const String16* stringArray, size_t len);
+  static RefPtr<String16Vector> Create(const String16* stringArray, size_t len);
 
   // Add an element to the back of the string vector
   virtual void push_back(const String16& val) = 0;
