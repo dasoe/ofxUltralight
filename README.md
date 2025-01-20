@@ -18,7 +18,7 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 * Mouse klick and scroll wheel implementation.
 * Basic keyboard implementation.
 * High-level (easy to understand and use) code in your App.
-* Communication OF->Ultralight and Ultralight->OF.
+* Communication OF->Ultralight (JS), Ultralight(JS)->OF and Ultralight(JS)->OF-> Ultralight(JS).
 * UL log goes to Terminal via OF Logging, same for Console Messages.
 * Only windows for now. I will definetely do a Linux Version, though.
 * *example-basic-CPU* shows how to use in general.

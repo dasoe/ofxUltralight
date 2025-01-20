@@ -59,11 +59,14 @@ public:
 		uint32_t line_number,
 		uint32_t column_number,
 		const String& source_id);
-		virtual void OnDOMReady(ultralight::View* caller, uint64_t frame_id, bool is_main_frame,const String& url);
+
+	virtual void OnDOMReady(ultralight::View* caller, uint64_t frame_id, bool is_main_frame,const String& url);
+
 		bool DOMready;
 
 		void setup(int width, int height, string url);
-		void setup(int width, int height, ofVec2f t_offset, string url);
+		void setup ( int width, int height, ofVec2f t_offset, string url );
+		void setup(int width, int height, ofVec2f t_offset, string url, bool _transparent );
 		void load(string url);
 		void update();
 		void draw();

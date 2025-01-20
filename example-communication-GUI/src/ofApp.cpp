@@ -21,6 +21,7 @@ void ofApp::setup(){
 	colors.push_back( ofColor(155, 20, 115) );
 	colors.push_back(ofColor(115, 20, 145));
 	whichColor = 0;
+	counter = 0;
 
 }
 
@@ -32,22 +33,20 @@ void ofApp::setup(){
 */
 
 // Definition
-JSValueRef  ofApp::buttonOne(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-
-	// getting arguments passed on to bound JS Function
-	JSString str = args[0];
-	// covert the JS arguments to usable string
-	string string2 = ul.getStringFromJSstr(str);
-	ofLogVerbose("## Function 'buttonOne' fired. Value passed is " + string2);
-	// ## OF stuff
+void ofApp::buttonClicked ( const JSObject& thisObject, const JSArgs& args ) {
+	ofLogVerbose ( "C++ button method triggered" );
 	positionCircle.y -= 10;
 }
 
 // Definition
-void ofApp::buttonTwo(const JSObject& obj, const JSArgs& args) {
+ JSValue ofApp::buttonTwo(const JSObject& obj, const JSArgs& args) {
 	ofLogVerbose("## Function 'buttonTwo' fired");
 	// ## OF stuff
 	positionCircle.y += 10;
+	counter++;
+
+	string str = "C++ method called " + ofToString ( counter ) + " times from JS gave back this message: Have a great day!";
+	return JSValue ( str.c_str() );
 }
 
 //--------------------------------------------------------------
@@ -57,20 +56,17 @@ void ofApp::update() {
 	if (ul.isDomReady() && !JSinitialized) {
 		ofLogVerbose("## initializing JS");
 
-		// Create a JavaScript String containing the name of our callback.
-		JSStringRef name = JSStringCreateWithUTF8CString("buttonOne");
+		// Acquire the JS execution context for the current page.
+		RefPtr<JSContext> context = ul.view->LockJSContext ();
+		SetJSContext ( context->ctx () );
 
-		// Create a garbage-collected JavaScript function that is bound to our
-		// native C callback 'OnButtonClick()'.
-		JSObjectRef func = JSObjectMakeFunctionWithCallback(ul.getJSContext(), name, buttonOne);
-
-		// Get the global JavaScript object (aka 'window')
-		JSObjectRef globalObj = JSContextGetGlobalObject(ul.getJSContext());
-
-		// Store our function in the page's global JavaScript object so that it
-		// accessible from the page as 'OnButtonClick()'.
-		JSObjectSetProperty(ul.getJSContext(), globalObj, name, func, 0, 0);
-
+		///
+		/// Get the global object (this would be the "window" object in JS)
+		///
+		JSObject global = JSGlobalObject ();
+		global[ "callOFButtonOne" ] = BindJSCallback ( &ofApp::buttonClicked );
+		global[ "callOFSecondButton" ] = BindJSCallbackWithRetval ( &ofApp::buttonTwo );
+		JSinitialized = true;
 	}
 	// update ultralight
 	ul.update();
