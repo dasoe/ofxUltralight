@@ -36,7 +36,7 @@ common:
 	ADDON_INCLUDES += src
 	ADDON_INCLUDES += libs
 	ADDON_INCLUDES += libs/include
-	
+
 	# any special flag that should be passed to the compiler when using this
 	# addon
 	# ADDON_CFLAGS =
@@ -91,6 +91,19 @@ common:
 linux64:
 	# linux only, any library that should be included in the project using
 	# pkg-config
+	ADDON_LIBS += ../../../addons/ofxUltralight/libs/lib/linux64/libAppCore.so
+	ADDON_LIBS += ../../../addons/ofxUltralight/libs/lib/linux64/libUltralight.so
+	ADDON_LIBS += ../../../addons/ofxUltralight/libs/lib/linux64/libUltralightCore.so
+	ADDON_LIBS += ../../../addons/ofxUltralight/libs/lib/linux64/libWebCore.so
+	# WHAT? HELL... 
+	ADDON_LDFLAGS += -L../../../addons/ofxUltralight/libs/lib/linux64
+	ADDON_LDFLAGS += -lAppCore
+	ADDON_LDFLAGS += -lUltralight
+	ADDON_LDFLAGS += -lWebCore
+	ADDON_LDFLAGS += -lUltralightCore
+	# This: ADDON_LDFLAGS += -Wl,-rpath=. OR put it in libs/
+	#ADDON_LDFLAGS += libUltralight.so
+	#ADDON_LDFLAGS += libWebCore.so
 	# ADDON_PKG_CONFIG_LIBRARIES =
 vs:
 	# After compiling copy the following dynamic libraries to the executable directory
