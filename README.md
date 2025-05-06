@@ -1,11 +1,11 @@
-
 [openframeworks](https://openframeworks.cc/) 0.11.0 addon for ultralight-sdk-1.3-win https://ultralig.ht/
 Ultralight (c) 2018 Ultralight, Inc. Ultralight is a trademark of Ultralight, Inc.
 
 ### About
 
-With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/), implementation of Ultralight in other Apps has become *much* easier. So I wrote this addon from scratch. **In the meantime, we are using Ultralight 1.3**
+With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/), implementation of Ultralight in other Apps has become *much* easier. So I wrote this addon from scratch. **In the meantime, we are using Ultralight 1.3 for Windows, 1.4 for Liunx (brand new branch)**
 This is only a beginning and at the moment mostly for my usecase:
+
 * Heavily layouted One-Page content, that can be changed easily without having to adjust my OF App
 * Simple GUI functionality (communication with the OF App, which has the power to do the advanced stuff)
 
@@ -21,19 +21,23 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 * High-level (easy to understand and use) code in your App.
 * Communication OF->Ultralight (JS), Ultralight(JS)->OF and Ultralight(JS)->OF-> Ultralight(JS).
 * UL log goes to Terminal via OF Logging, same for Console Messages.
-* Only windows for now. I will definetely do a Linux Version, though.
+* Windows version (Ultralight 1.3), now also Linux Version (Ultralight 1.4)
 * *example-basic-CPU* shows how to use in general.
 * *example-communication-GUI* shows how to do communication between Broser (JS) and OF, both directions.
 
+## Installation Linux
 
-## Installation
+- clone this repository to addons folder (or download, unzip, copy and remover the "-master" part in folder name)
+- Use project generator, include addon ofxUltralight, create the project. Alternatively just copy apps/myApps/emptyExample folder, rename it and add "ofxUltralight" to "addons.make"
+- Open the folder and type "make"
+
+## Installation Windows
 
 * clone this repository to addons folder (or download, unzip, copy and remover the "-master" part in folder name)
 * Use project generator, include addon ofxUltralight, create the project. 
 * Open it in Visual Studio 2019 (we need Platform Toolset v42 for Ultralight, so no VS 2017, sorry. But you can install them side by side.)
 * in case it is not done automatically on opening: retarget solution (right Mouseclick on your solution in solution explorer)
 * Set it to x64 (Win32 will fail) and build
-
 
 I am very happy! It works. Don't expect too much already, but come back from time to time, as it will grow.
 
