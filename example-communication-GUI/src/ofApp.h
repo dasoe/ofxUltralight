@@ -25,11 +25,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-
 		bool JSinitialized;
-		//JSValueRef   buttonOne( JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception );
 		JSValue buttonOne ( const JSObject& thisObject, const JSArgs& args );
-
 		void buttonTwo(const JSObject& obj, const JSArgs& args);
 		ofxUltralight ul;
 

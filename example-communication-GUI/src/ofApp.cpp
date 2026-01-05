@@ -24,14 +24,6 @@ void ofApp::setup(){
 
 }
 
-/* ToDo:
-##########################################################
-	Javascript-Stuff Direction Browser->OF
-	https://docs.ultralig.ht/docs/calling-a-c-function-from-js
-##########################################################
-*/
-
-
 //--------------------------------------------------------------
 JSValue ofApp::buttonOne ( const JSObject& thisObject, const JSArgs& args ) {
 	ofLogVerbose ( "## Function 'buttonOne' fired. Getting message and send another one back" );
@@ -70,8 +62,6 @@ void ofApp::update() {
 	}
 	// update ultralight
 	ul.update();
-
-
 }
 
 //--------------------------------------------------------------
@@ -90,8 +80,6 @@ void ofApp::draw() {
 	ofDrawRectangle( positionRectangle, 100, 30 );
 	ofSetColor(255);
 	ofDrawBitmapString("Button", positionRectangle.x+26, positionRectangle.y+18);
-
-
 }
 
 //--------------------------------------------------------------
