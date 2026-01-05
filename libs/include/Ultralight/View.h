@@ -3,7 +3,7 @@
  *                                                                                                *
  *  See <https://ultralig.ht> for licensing and more.                                             *
  *                                                                                                *
- *  (C) 2024 Ultralight, Inc.                                                                     *
+ *  (C) 2025 Ultralight, Inc.                                                                     *
  **************************************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>
@@ -113,11 +113,11 @@ struct UExport ViewConfig {
   String font_family_sans_serif = "Arial";
 
   ///
-  /// Default user-agent string.
+  /// Custom user-agent string. You can use this to override the default user-agent string.
+  /// 
+  /// @pre This feature is only available in Ultralight Pro edition and above.
   ///
-  String user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                      "AppleWebKit/615.1.18.100.1 (KHTML, like Gecko) "
-                      "Ultralight/1.4.0 Version/16.4.1 Safari/615.1.18.100.1";
+  String user_agent = ULTRALIGHT_USER_AGENT;
 };
 
 ///

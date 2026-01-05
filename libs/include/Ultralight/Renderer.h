@@ -236,6 +236,8 @@ class UExport Renderer : public RefCounted {
   ///
   /// Start the remote inspector server.
   /// 
+  /// @pre This feature is only available in Ultralight Pro edition and above.
+  /// 
   /// While the remote inspector is active, Views that are loaded into this renderer
   /// will be able to be remotely inspected from another Ultralight instance either locally
   /// (another app on same machine) or remotely (over the network) by navigating a View to:

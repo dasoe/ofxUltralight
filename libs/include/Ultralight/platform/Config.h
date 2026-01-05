@@ -3,7 +3,7 @@
  *                                                                                                *
  *  See <https://ultralig.ht> for licensing and more.                                             *
  *                                                                                                *
- *  (C) 2024 Ultralight, Inc.                                                                     *
+ *  (C) 2025 Ultralight, Inc.                                                                     *
  **************************************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>

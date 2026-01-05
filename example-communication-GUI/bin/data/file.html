@@ -4,7 +4,10 @@
 <head>
     <script>
         let turn = false;
-        function callOFButtonOne(num) { }
+        function clickButtonOne( message ) {
+			let messageBack = buttonOne(message);
+			console.log( messageBack );
+		}
         function callOFSecondButton() { }
         function receiveFromOF(content) {
             let el = document.getElementById("contentToAdd");
@@ -32,7 +35,7 @@
         Click the Buttons to trigger the openFrameworks App:
     </div>
     <div>
-        <button onclick="callOFButtonOne('Persistence is king!');">Button 1</button>
+        <button onclick="clickButtonOne('Message from JS to C++: Persistence is king!');">Button 1</button>
         <button onclick="callOFSecondButton();">Button 2</button>
     </div>
     <br />

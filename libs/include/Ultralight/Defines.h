@@ -3,7 +3,7 @@
  *                                                                                                *
  *  See <https://ultralig.ht> for licensing and more.                                             *
  *                                                                                                *
- *  (C) 2024 Ultralight, Inc.                                                                     *
+ *  (C) 2025 Ultralight, Inc.                                                                     *
  **************************************************************************************************/
 #pragma once
 
@@ -20,7 +20,8 @@
 #define UExport
 #else
 
-#include "Exports.h"
+#include <Ultralight/Config.h>
+#include <Ultralight/Exports.h>
 
 // Require C++11 Support
 #if defined(_MSC_VER)
@@ -56,7 +57,9 @@
 #endif
 
 #ifndef UL_COMPILER_GCC_LIKE
-#  define UL_COMPILER_GCC_LIKE (defined(__clang__) || defined(__GNUC__) || defined(__GNUG__))
+#  if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+#    define UL_COMPILER_GCC_LIKE
+#  endif
 #endif
 
 #ifndef UL_ALWAYS_INLINE
@@ -77,7 +80,19 @@
 #  endif
 #endif
 
+#ifndef UL_ALIGN
+    #if defined(UL_COMPILER_GCC_LIKE) 
+        #define UL_ALIGN(x) __attribute__((aligned(x)))
+    #elif defined(__cplusplus) && __cplusplus >= 201103L
+        #define UL_ALIGN(x) alignas(x)
+    #elif defined(_MSC_VER)
+        #define UL_ALIGN(x) __declspec(align(x))
+    #else
+        #define UL_ALIGN(x)
+    #endif
 #endif
+
+#endif // #ifdef SWIG
 
 #define ULTRALIGHT_VERSION "1.4.0"
 #define ULTRALIGHT_VERSION_MAJOR 1
@@ -90,6 +105,10 @@
 #define WEBKIT_VERSION_TINY 18
 #define WEBKIT_VERSION_MICRO 100
 #define WEBKIT_VERSION_NANO 1
+
+#define ULTRALIGHT_USER_AGENT "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " \
+                              "AppleWebKit/615.1.18.100.1 (KHTML, like Gecko) " \
+                              "Ultralight/1.4.0 Version/16.4.1 Safari/615.1.18.100.1"
 
 #ifdef __cplusplus
 extern "C" {

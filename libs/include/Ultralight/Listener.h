@@ -3,7 +3,7 @@
  *                                                                                                *
  *  See <https://ultralig.ht> for licensing and more.                                             *
  *                                                                                                *
- *  (C) 2024 Ultralight, Inc.                                                                     *
+ *  (C) 2025 Ultralight, Inc.                                                                     *
  **************************************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>
@@ -341,6 +341,8 @@ class UExport NetworkListener {
   /// You can use this to block or modify network requests before they are sent.
   /// 
   /// Return true to allow the request, return false to block it.
+  /// 
+  /// @pre This feature is only available in Ultralight Pro edition and above.
   /// 
   virtual bool OnNetworkRequest(ultralight::View* caller, NetworkRequest& request) = 0;
 };

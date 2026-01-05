@@ -3,7 +3,7 @@
  *                                                                                                *
  *  See <https://ultralig.ht> for licensing and more.                                             *
  *                                                                                                *
- *  (C) 2024 Ultralight, Inc.                                                                     *
+ *  (C) 2025 Ultralight, Inc.                                                                     *
  **************************************************************************************************/
 #pragma once
 #include <Ultralight/Defines.h>
@@ -30,7 +30,7 @@ struct UExport Matrix4x4 {
 ///
 /// Transformation Matrix helper
 ///
-struct UExport alignas(16) Matrix {
+struct UExport UL_ALIGN(16) Matrix {
   typedef double Aligned4x4[4][4];
 
   ///
