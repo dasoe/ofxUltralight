@@ -20,7 +20,7 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 * High-level (easy to understand and use) code in your App.
 * Communication OF->Ultralight and Ultralight->OF.
 * UL log goes to Terminal via OF Logging, same for Console Messages.
-* Only windows for now. I will definetely do a Linux Version, though.
+* Only Windows and Linux for now (Linux Version see [branch linux-1.4](https://github.com/dasoe/ofxUltralight/tree/linux-1.4)).
 * *example-basic-CPU* shows how to use in general.
 * *example-communication-GUI* shows how to do communication between Broser (JS) and OF, both directions.
 
