@@ -1,5 +1,16 @@
-[openframeworks](https://openframeworks.cc/) 0.12.0 addon for ultralight-sdk-1.4-win [https://ultralig.ht/](https://ultralig.ht/). See the branches for version for earlier versions.
-Ultralight (c) 2018 Ultralight, Inc. Ultralight is a trademark of Ultralight, Inc.
+[openframeworks](https://openframeworks.cc/) 0.12. addon for Ultralight, an ultra-portable web-browser engine.
+
+---
+
+See [https://ultralig.ht](https://ultralig.ht) for licensing and more.
+
+Ultralight (C) 2024 Ultralight, Inc.
+
+Ultralight is a trademark of Ultralight, Inc.
+
+---
+
+Based on ultralight-sdk-1.4-win [https://ultralig.ht/](https://ultralig.ht/). See the branches for version for earlier versions.
 
 ### About
 
