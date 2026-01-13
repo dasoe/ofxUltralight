@@ -46,4 +46,3 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 I am very happy! It works. Don't expect too much already, but come back from time to time, as it will grow.
 
 oe
-
