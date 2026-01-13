@@ -13,35 +13,35 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 
 ### Status
 
-* For now only CPU rendering, GPU ist yet to come. (Please check out [IanByuns work](https://github.com/IanByun/ofxUltralight-byun) for a working GPU solution. Or switch to gpu branch here and help me getting it to work...)
-* Basic loading of URLs, Files and raw HTML.
-* Mouse klick and scroll wheel implementation.
-* Basic keyboard implementation.
-* High-level (easy to understand and use) code in your App.
-* Communication OF->Ultralight and Ultralight->OF.
-* UL log goes to Terminal via OF Logging, same for Console Messages.
-* Only Windows and Linux for now. Linux Version see [branch linux-1.4](https://github.com/dasoe/ofxUltralight/tree/linux-1.4), Windows Version see [branch main](https://github.com/dasoe/ofxUltralight/tree/main).
-* *example-basic-CPU* shows how to use in general.
-* *example-communication-GUI* shows how to do communication between Broser (JS) and OF, both directions.
+- For now only CPU rendering, GPU ist yet to come. (Please check out [IanByuns work](https://github.com/IanByun/ofxUltralight-byun) for a working GPU solution. Or switch to gpu branch here and help me getting it to work...)
+- Basic loading of URLs, Files and raw HTML.
+- Mouse klick and scroll wheel implementation.
+- Basic keyboard implementation.
+- High-level (easy to understand and use) code in your App.
+- Communication OF->Ultralight and Ultralight->OF.
+- UL log goes to Terminal via OF Logging, same for Console Messages.
+- Only Windows and Linux for now. Linux Version see [branch linux-1.4](https://github.com/dasoe/ofxUltralight/tree/linux-1.4), Windows Version see [branch main](https://github.com/dasoe/ofxUltralight/tree/main).
+- *example-basic-CPU* shows how to use in general.
+- *example-communication-GUI* shows how to do communication between Broser (JS) and OF, both directions.
 
 ## Installation/Usage in Windows
 
-* clone this repository to addons folder using git (OR download, unzip, copy and remove the "-master" part in folder name)
+- clone this repository to addons folder using git (OR download, unzip, copy and remove the "-master" part in folder name)
 
-* Use project generator, include addon ofxUltralight, create the project.
+- Use project generator, include addon ofxUltralight, create the project.
 
-* Open it in Visual Studio 2019 (we need Platform Toolset v42 for Ultralight, so no VS 2017, sorry. But you can install them side by side.)
+- Open it in Visual Studio 2019 (we need Platform Toolset v42 for Ultralight, so no VS 2017, sorry. But you can install them side by side.)
 
-* in case it is not done automatically on opening: retarget solution (right Mouseclick on your solution in solution explorer)
+- in case it is not done automatically on opening: retarget solution (right Mouseclick on your solution in solution explorer)
 
-* Set it to x64 (Win32 will fail) and build
+- Set it to x64 (Win32 will fail) and build
 
 ## Installation/Usage in Linux
 
-* clone this repository to addons folder using git (OR download, unzip, copy and remove the "-master" part in folder name)
-* Add "ofxUltralight" to addons.make (OR use the Project Generator to add this addon)
-* go to your projects folder and type "make"
-* add the files from folder addons/ofxUltralight/bin to the bin folder of your project
+- clone this repository to addons folder using git (OR download, unzip, copy and remove the "-master" part in folder name)
+- Add "ofxUltralight" to addons.make (OR use the Project Generator to add this addon)
+- go to your projects folder and type "make"
+- add the files from folder addons/ofxUltralight/bin to the bin folder of your project
 
 I am very happy! It works. Don't expect too much already, but come back from time to time, as it will grow.
 

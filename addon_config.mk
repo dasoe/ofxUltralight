@@ -66,12 +66,8 @@ common:
 	
 	# source files that will be included as objective c files explicitly
 	# ADDON_OBJC_SOURCES = 
-
-	ADDON_OBJC_SOURCES += ../../../addons/ofxUltralight/bin/libAppCore.so
-	ADDON_OBJC_SOURCES += ../../../addons/ofxUltralight/bin/libUltralight.so
-	ADDON_OBJC_SOURCES += ../../../addons/ofxUltralight/bin/libWebCore.so
-
-	# defines that will be passed to the compiler when including this addon
+	
+	# derines that will be passed to the compiler when including this addon
 	# ADDON_DEFINES
 	
 	# some addons need resources to be copied to the bin/data folder of the project
@@ -95,27 +91,7 @@ common:
 linux64:
 	# linux only, any library that should be included in the project using
 	# pkg-config
-	ADDON_LIBS += ../../../addons/ofxUltralight/bin/libAppCore.so
-	ADDON_LIBS += ../../../addons/ofxUltralight/bin/libUltralight.so
-	ADDON_LIBS += ../../../addons/ofxUltralight/bin/libUltralightCore.so
-	ADDON_LIBS += ../../../addons/ofxUltralight/bin/libWebCore.so
-	# WHAT? HELL... 
-	ADDON_LDFLAGS += -Wl,-rpath=. 
-	#OR put it in libs/
-	ADDON_LDFLAGS += -L../../../addons/ofxUltralight/bin
-	ADDON_LDFLAGS += -lAppCore
-	ADDON_LDFLAGS += -lUltralight
-	ADDON_LDFLAGS += -lWebCore
-	# This: 
-	#ADDON_LDFLAGS += libUltralight.so
-	#ADDON_LDFLAGS += libWebCore.so
 	# ADDON_PKG_CONFIG_LIBRARIES =
-
-	ADDON_DLLS_TO_COPY += bin/libUltralight.so
-	ADDON_DLLS_TO_COPY += bin/libUltralightCore.so
-	ADDON_DLLS_TO_COPY += bin/libWebCore.so
-	ADDON_DLLS_TO_COPY += bin/libAppCore.so
-
 vs:
 	# After compiling copy the following dynamic libraries to the executable directory
 	# only windows visual studio
