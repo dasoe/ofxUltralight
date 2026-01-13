@@ -19,6 +19,13 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 	platform.set_logger(GetDefaultLogger("ultralight.log"));
 	platform.set_file_system(GetPlatformFileSystem("data"));
 
+	///
+	/// You should keep this instance alive for the duration of your program.
+	///
+	std::unique_ptr<GLTextureSurfaceFactory> factory ( new GLTextureSurfaceFactory () );
+
+	Platform::instance ().set_surface_factory ( factory.get () );
+
 	//gpu_driver = make_shared<GPUDriverGL>(1);
 	//platform.set_gpu_driver(gpu_driver.get());
 
@@ -32,6 +39,18 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 	view = renderer->CreateView(width, height, view_config, nullptr);
 	ofLogVerbose("given string is '" + url + "'");
 	
+	// #### New: Custom Surface: paint directly into ofTexture
+	// Preparation of Texture. Possible ToDo: Does this need to be adjusted later in some case?
+	oeTexture.texData.width = view->width ();
+	oeTexture.texData.height = view->height ();
+	oeTexture.texData.tex_w = oeTexture.texData.width;
+	oeTexture.texData.tex_h = oeTexture.texData.height;
+	oeTexture.texData.bFlipTexture = false;
+	oeTexture.texData.tex_u = 1;
+	oeTexture.texData.tex_t = 1;
+	oeTexture.texData.textureTarget = GL_TEXTURE_2D;
+	oeTexture.texData.bAllocated = true;
+
 	//inspectorView = view->inspector();
 	//inspectorView->Resize(700, 300);
 	//string ipath = ofToDataPath("", true) + "/inspector/Main.html";
@@ -143,37 +162,41 @@ void ofxUltralight::draw() {
 	// Get the Surface for the View (assuming CPU rendering)
 	Surface* surface = view->surface ();
 
+	// #### New: Prepare Custom Surface: paint directly into ofTexture
+	GLPBOTextureSurface* texture_surface = ( GLPBOTextureSurface* ) surface;
+	GLuint texture_id = texture_surface->GetTextureAndSyncIfNeeded ();
+
 	// Check if the Surface is dirty (pixels have changed)
-	if ( !surface->dirty_bounds ().IsEmpty () ) {
-		// Cast to the default Surface implementation (BitmapSurface) and get
-		// the underlying Bitmap.
-		RefPtr<Bitmap> bitmap = static_cast< BitmapSurface* >( surface )->bitmap ();
+	if ( texture_surface->dirty_bounds( ).IsEmpty () ) {
+		// #### Old: DEFAULT Surface implementation (BitmapSurface)
+			// Cast to the default Surface implementation (BitmapSurface) and get
+			// the underlying Bitmap.
+			//RefPtr<Bitmap> bitmap = static_cast< BitmapSurface* >( surface )->bitmap ();
 
-		void* pixels = bitmap->LockPixels();
+			//void* pixels = bitmap->LockPixels();
 
-		/// Get the bitmap dimensions.
-		uint32_t width = bitmap->width();
-		uint32_t height = bitmap->height();
-		uint32_t stride = bitmap->row_bytes();
+			///// Get the bitmap dimensions.
+			//uint32_t width = bitmap->width();
+			//uint32_t height = bitmap->height();
+			//uint32_t stride = bitmap->row_bytes();
 
-		unsigned char* pixels2 = (unsigned char*)pixels;
-		// swap R and B channels (does nnot work in loadData later, don't know why.)
-		oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_R, GL_BLUE);
-		oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_B, GL_RED);
-		// load the pixels to ofTexture
-		oeTexture.loadData(pixels2, width, height, GL_RGBA);
+			//unsigned char* pixels2 = (unsigned char*)pixels;
+			//// swap R and B channels (does nnot work in loadData later, don't know why.)
+			//oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_R, GL_BLUE);
+			//oeTexture.setSwizzle(GL_TEXTURE_SWIZZLE_B, GL_RED);
+			//// load the pixels to ofTexture
+			//oeTexture.loadData(pixels2, width, height, GL_RGBA);
 
-		/// Unlock the Bitmap when we are done.
-		bitmap->UnlockPixels();
+			///// Unlock the Bitmap when we are done.
+			//bitmap->UnlockPixels();
 
+		// #### New: Custom Surface: paint directly into ofTexture
+		// Preparation of Texture in setup!
+		oeTexture.setUseExternalTextureID ( texture_id );
 		/// Clear the dirty bounds.
 		surface->ClearDirtyBounds ();
-		
 	}
-	oeTexture.draw(offset.x, offset.y);
-
-
-
+	oeTexture.draw ( offset.x, offset.y );
 
 }
 
