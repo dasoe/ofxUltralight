@@ -13,3 +13,4 @@
 /*/[Bb]uild/
 /example-*/bin/*.*
 /example-*/bin/example-*
+/example-*/bin/default/
