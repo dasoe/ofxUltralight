@@ -1,3 +1,8 @@
+## Deprecated branch.
+### Please use [linux-1.4](https://github.com/dasoe/ofxUltralight/tree/linux-1.4) now. It should work!
+
+---
+
 [openframeworks](https://openframeworks.cc/) 0.11.0 addon for ultralight-sdk-1.3-win https://ultralig.ht/
 Ultralight (c) 2018 Ultralight, Inc. Ultralight is a trademark of Ultralight, Inc.
 
@@ -42,3 +47,4 @@ Also: I am not a C++ developer. I am more than happy to learn and improve the co
 I am very happy! It works. Don't expect too much already, but come back from time to time, as it will grow.
 
 oe
+
