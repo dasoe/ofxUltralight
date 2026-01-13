@@ -1,12 +1,12 @@
-[openframeworks](https://openframeworks.cc/) 0.12.0 addon for ultralight-sdk-1.4-win https://ultralig.ht/. See the branches for version for earlier versions.
+[openframeworks](https://openframeworks.cc/) 0.12.0 addon for ultralight-sdk-1.4-win [https://ultralig.ht/](https://ultralig.ht/). See the branches for version for earlier versions.
 Ultralight (c) 2018 Ultralight, Inc. Ultralight is a trademark of Ultralight, Inc.
 
 ### About
 
 With the release of the most inspiring [Ultralight 1.2](https://ultralig.ht/), implementation of Ultralight in other Apps has become *much* easier. So I wrote this addon from scratch. This is only a beginning and at the moment mostly for my usecase:
 
-* Heavily layouted One-Page content, that can be changed easily without having to adjust my OF App
-* Simple GUI functionality (communication with the OF App, which has the power to do the advanced stuff)
+- Heavily layouted One-Page content, that can be changed easily without having to adjust my OF App
+- Simple GUI functionality (communication with the OF App, which has the power to do the advanced stuff)
 
 My focus is not on perfect code but on ease of use and integration. Of course the addon can be adjusted and developed. I am happy if it will be an all-purpose Browser addon one day. Join in, everybody. 
 Also: I am not a C++ developer. I am more than happy to learn and improve the code!
