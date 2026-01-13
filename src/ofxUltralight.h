@@ -1,5 +1,13 @@
 ﻿#pragma once
 
+/**************************************************************************************************
+ *  This file uses Ultralight, an ultra-portable web-browser engine.                              *
+ *                                                                                                *
+ *  See <https://ultralig.ht> for licensing and more.                                             *
+ *                                                                                                *
+ *  (C) 2024 Ultralight, Inc.                                                                     *
+ **************************************************************************************************/
+
 #include <ofMain.h>
 #include <Ultralight/Ultralight.h>
 #include <JavaScriptCore/JavaScript.h>
