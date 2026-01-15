@@ -2,11 +2,11 @@
 
 
 void ofxUltralight::setup(int width, int height, string url) {
-	setup(width, height, ofVec2f(0, 0), url);
+	setup(width, height, ofVec2f(0, 0), url, false);
 	DOMready = false;
 }
 
-void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
+void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url, bool _transparent ) {
 	//ofLogNotice(ofToDataPath("resources").c_str());
 	offset = t_offset;
 	Config config;
@@ -33,6 +33,7 @@ void ofxUltralight::setup(int width, int height, ofVec2f t_offset, string url) {
 
 	ViewConfig view_config;
 	view_config.is_accelerated = false;
+	view_config.is_transparent = _transparent;
 	view_config.initial_device_scale = 1.0;
 
 
