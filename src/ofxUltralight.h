@@ -68,7 +68,7 @@ public:
 		bool DOMready;
 
 		void setup(int width, int height, string url);
-		void setup(int width, int height, ofVec2f t_offset, string url);
+		void setup(int width, int height, ofVec2f t_offset, string url, bool _transparent );
 		void load(string url);
 		void update();
 		void draw();
